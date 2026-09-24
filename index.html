@@ -3,1133 +3,537 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nghiên Cứu Tần Số Âm Thanh & Khả Năng Tập Trung - KHKT</title>
-    <!-- Tailwind CSS -->
+    <title>PSYCH-TEST KHKT v0.2</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js for data visualization -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-        .pulse-stimulus {
-            animation: pulse-animation 0.3s ease-out;
-        }
-        @keyframes pulse-animation {
-            0% { transform: scale(0.8); opacity: 0.5; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1.0); opacity: 1; }
-        }
-        /* Custom scrollbars */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
+        .active-tab { background-color: #4f46e5 !important; color: white !important; }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans flex flex-col justify-between">
 
-    <!-- Header / Navbar -->
-    <header class="bg-slate-800/80 backdrop-blur border-b border-slate-700/60 sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-2">
+    <!-- HEADER & NAVBAR -->
+    <header class="bg-slate-800/80 backdrop-blur border-b border-slate-700 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                    <i class="fa-solid fa-brain text-white text-xl"></i>
+                <div class="bg-indigo-600 p-2.5 rounded-xl text-white">
+                    <i class="fa-solid fa-brain text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-lg font-bold text-white tracking-wide leading-tight">PSYCH-TEST KHKT v0.2</h1>
-                    <p class="text-xs text-slate-400">Nghiên cứu ảnh hưởng của tần số âm thanh đến nhận thức</p>
+                    <h1 class="font-bold text-lg leading-none">PSYCH-TEST KHKT v0.2</h1>
+                    <p class="text-xs text-slate-400 mt-1">Nghiên cứu ảnh hưởng của tần số âm thanh đến nhận thức</p>
                 </div>
             </div>
             
-            <div class="flex items-center gap-2 flex-wrap">
-                <button id="btnNavHome" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-700 text-white hover:bg-slate-600 transition flex items-center gap-1.5">
+            <nav class="flex items-center space-x-2 text-sm">
+                <button onclick="switchTab('test')" id="btn-tab-test" class="tab-btn active-tab px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
                     <i class="fa-solid fa-play"></i> Bài Test
                 </button>
-                <button id="btnNavGuide" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center gap-1.5 border border-slate-700">
+                <button onclick="switchTab('guide')" id="btn-tab-guide" class="tab-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
                     <i class="fa-solid fa-circle-question"></i> Hướng Dẫn
                 </button>
-                <button id="btnNavHistory" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center gap-1.5 border border-slate-700">
-                    <i class="fa-solid fa-database"></i> Dữ liệu (<span id="historyCount">0</span>)
+                <button onclick="switchTab('data')" id="btn-tab-data" class="tab-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
+                    <i class="fa-solid fa-database"></i> Dữ liệu ( <span id="data-count">0</span> )
                 </button>
-                <button id="btnNavProposal" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center gap-1.5 border border-slate-700">
+                <button onclick="switchTab('project')" id="btn-tab-project" class="tab-btn bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
                     <i class="fa-solid fa-file-lines"></i> Đề tài KHKT
                 </button>
-            </div>
+            </nav>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6">
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-4xl mx-auto w-full px-4 py-8 flex-grow">
 
-        <!-- VIEW 1: SETUP FORM -->
-        <section id="viewSetup" class="max-w-2xl mx-auto space-y-6">
-            <!-- Information Banner -->
-            <div class="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 shadow-xl">
+        <!-- TAB 1: BÀI TEST -->
+        <section id="tab-test" class="space-y-6">
+            <div class="bg-slate-800/50 border border-slate-700/60 rounded-2xl p-6 backdrop-blur">
                 <div class="flex items-start gap-4">
-                    <div class="p-3 bg-indigo-500/10 rounded-xl text-indigo-400">
+                    <div class="p-3 bg-indigo-500/10 text-indigo-400 rounded-xl">
                         <i class="fa-solid fa-flask text-2xl"></i>
                     </div>
                     <div>
-                        <h2 class="text-base font-semibold text-white">Khảo sát & Kiểm tra Thực nghiệm</h2>
-                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-                            Bài thử nghiệm đo thời gian phản ứng thị giác (CPT - Continuous Performance Task). Vui lòng đeo tai nghe, chọn đúng điều kiện âm thanh được phân công và giữ tập trung trong suốt quá trình làm bài.
-                        </p>
+                        <h2 class="text-xl font-bold mb-1">Khảo sát & Kiểm tra Thực nghiệm</h2>
+                        <p class="text-sm text-slate-400">Bài thử nghiệm đo thời gian phản ứng thị giác (CPT - Continuous Performance Task). Vui lòng đeo tai nghe, chọn đúng điều kiện âm thanh được phân công và giữ tập trung trong suốt quá trình làm bài.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Configuration Form -->
-            <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-6 shadow-2xl space-y-5">
-                <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                    <i class="fa-solid fa-sliders text-indigo-400"></i> Thiết Lập Thông Số Thử Nghiệm
+            <!-- FORM CẤU HÌNH -->
+            <div id="setup-panel" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-6">
+                <h3 class="text-md font-semibold text-slate-300 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-indigo-400"></i> THIẾT LẬP THÔNG SỐ THỬ NGHIỆM
                 </h3>
 
-                <form id="setupForm" onsubmit="return false;" class="space-y-4">
-                    <!-- Participant ID -->
-                    <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Mã Học Sinh (Subject ID) <span class="text-rose-400">*</span></label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400"><i class="fa-solid fa-user-tag text-xs"></i></span>
-                            <input type="text" id="inputStudentId" placeholder="VD: HS01, HS02..." required
-                                class="w-full bg-slate-900 border border-slate-700 rounded-xl py-2.5 pl-9 pr-4 text-sm text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
-                        </div>
-                    </div>
-
-                    <!-- Sound Condition Selection -->
-                    <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Điều Kiện Âm Thanh (Audio Condition) <span class="text-rose-400">*</span></label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <label class="sound-option cursor-pointer border border-slate-700 bg-slate-900/60 p-3 rounded-xl flex items-center gap-3 hover:border-indigo-500/60 transition">
-                                <input type="radio" name="soundCondition" value="0" checked class="text-indigo-600 focus:ring-indigo-500">
-                                <div>
-                                    <div class="text-xs font-semibold text-white">Đối chứng (Control)</div>
-                                    <div class="text-[11px] text-slate-400">Không phát âm thanh (0 Hz)</div>
-                                </div>
-                            </label>
-
-                            <label class="sound-option cursor-pointer border border-slate-700 bg-slate-900/60 p-3 rounded-xl flex items-center gap-3 hover:border-indigo-500/60 transition">
-                                <input type="radio" name="soundCondition" value="250" class="text-indigo-600 focus:ring-indigo-500">
-                                <div>
-                                    <div class="text-xs font-semibold text-emerald-400">Dải Tần Thấp</div>
-                                    <div class="text-[11px] text-slate-400">Tần số 250 Hz (Sine wave)</div>
-                                </div>
-                            </label>
-
-                            <label class="sound-option cursor-pointer border border-slate-700 bg-slate-900/60 p-3 rounded-xl flex items-center gap-3 hover:border-indigo-500/60 transition">
-                                <input type="radio" name="soundCondition" value="1000" class="text-indigo-600 focus:ring-indigo-500">
-                                <div>
-                                    <div class="text-xs font-semibold text-amber-400">Dải Tần Trung</div>
-                                    <div class="text-[11px] text-slate-400">Tần số 1,000 Hz (Sine wave)</div>
-                                </div>
-                            </label>
-
-                            <label class="sound-option cursor-pointer border border-slate-700 bg-slate-900/60 p-3 rounded-xl flex items-center gap-3 hover:border-indigo-500/60 transition">
-                                <input type="radio" name="soundCondition" value="4000" class="text-indigo-600 focus:ring-indigo-500">
-                                <div>
-                                    <div class="text-xs font-semibold text-purple-400">Dải Tần Cao</div>
-                                    <div class="text-[11px] text-slate-400">Tần số 4,000 Hz (Sine wave)</div>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Number of Trials & Volume -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                        <div>
-                            <label class="block text-xs font-medium text-slate-300 mb-1">Số lượt thử nghiệm (Trials)</label>
-                            <select id="selectTrials" class="w-full bg-slate-900 border border-slate-700 rounded-xl py-2 px-3 text-xs text-white focus:outline-none focus:border-indigo-500">
-                                <option value="10">10 Lượt (Nhanh - Pilot)</option>
-                                <option value="15" selected>15 Lượt (Khuyến nghị chuẩn)</option>
-                                <option value="20">20 Lượt (Đo chuyên sâu)</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-medium text-slate-300 mb-1">Thử Âm Thanh Trước Làm Bài</label>
-                            <button type="button" id="btnTestSound" class="w-full bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-xl py-2 px-3 text-xs font-medium text-slate-200 flex items-center justify-center gap-2 transition">
-                                <i class="fa-solid fa-volume-high text-indigo-400"></i> <span id="txtTestSound">Bật Nghe Thử Âm Thanh</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Audio Volume Control -->
-                    <div class="pt-1">
-                        <div class="flex justify-between text-xs text-slate-400 mb-1">
-                            <span>Cường độ âm thanh (Volume)</span>
-                            <span id="volumeValue">30%</span>
-                        </div>
-                        <input type="range" id="inputVolume" min="0" max="100" value="30" class="w-full accent-indigo-500 bg-slate-700 h-1.5 rounded-lg appearance-none cursor-pointer">
-                    </div>
-
-                    <!-- Instruction Note -->
-                    <div class="bg-indigo-950/40 border border-indigo-800/40 rounded-xl p-3 text-xs text-indigo-300/80 leading-relaxed">
-                        <i class="fa-solid fa-circle-info mr-1 text-indigo-400"></i>
-                        <strong>Hướng dẫn nhanh:</strong> Bấm phím <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-600 rounded text-amber-300">Spacebar</kbd> hoặc nút **PHẢN ỨNG** ngay lập tức khi xuất hiện VÒNG TRÒN XANH LÁ trên màn hình.
-                    </div>
-
-                    <!-- Start Button -->
-                    <button type="button" id="btnStartTest" class="w-full py-3.5 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/25 transition transform active:scale-[0.99] flex items-center justify-center gap-2 text-sm">
-                        <i class="fa-solid fa-play"></i> BẮT ĐẦU BÀI KIỂM TRA
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- VIEW 2: REACTION TEST AREA -->
-        <section id="viewTest" class="hidden max-w-4xl mx-auto space-y-4">
-            <!-- Top Status Bar -->
-            <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-4 flex flex-wrap justify-between items-center gap-4 text-xs">
-                <div class="flex items-center gap-3">
-                    <span class="px-3 py-1 bg-slate-900 rounded-lg text-slate-300 font-medium">Học sinh: <strong id="displayStudentId" class="text-indigo-400">--</strong></span>
-                    <span id="displayConditionBadge" class="px-3 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-lg font-medium">--</span>
-                </div>
-
-                <div class="flex items-center gap-6">
-                    <div>
-                        <span class="text-slate-400">Tiến trình:</span>
-                        <strong id="displayProgress" class="text-white ml-1">0 / 15</strong>
-                    </div>
-                    <div>
-                        <span class="text-slate-400">Trung bình:</span>
-                        <strong id="displayLiveAvg" class="text-emerald-400 ml-1">0 ms</strong>
-                    </div>
-                    <div>
-                        <span class="text-slate-400">Lỗi:</span>
-                        <strong id="displayLiveErrors" class="text-rose-400 ml-1">0</strong>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Interactive Canvas / Stimulus Screen -->
-            <div id="testArea" class="relative bg-slate-950 border-2 border-slate-800 rounded-3xl h-[420px] flex flex-col items-center justify-center overflow-hidden cursor-pointer select-none transition-colors duration-200">
-                
-                <!-- Center Message / Visual Stimulus -->
-                <div id="stimulusContainer" class="text-center z-10 p-6">
-                    <div id="stimulusCircle" class="hidden w-36 h-36 mx-auto rounded-full bg-gradient-to-tr from-emerald-400 to-teal-300 shadow-2xl shadow-emerald-500/50 flex items-center justify-center pulse-stimulus">
-                        <i class="fa-solid fa-bolt text-slate-900 text-5xl"></i>
-                    </div>
-
-                    <div id="stimulusTextContainer" class="space-y-2">
-                        <p id="testMainPrompt" class="text-lg font-semibold text-slate-300">Chuẩn bị...</p>
-                        <p id="testSubPrompt" class="text-xs text-slate-500">Âm thanh sẽ phát đồng thời. Sẵn sàng tay trên phím Spacebar.</p>
-                    </div>
-                </div>
-
-                <!-- Touch Action Button for Mobile/Tablet -->
-                <button id="btnTouchAction" class="absolute bottom-6 px-10 py-3.5 bg-indigo-600/80 hover:bg-indigo-600 active:bg-indigo-700 text-white font-bold rounded-2xl shadow-lg border border-indigo-400/30 transition text-sm flex items-center gap-2">
-                    <i class="fa-solid fa-hand-pointer"></i> BẤM PHẢN ỨNG (SPACEBAR)
-                </button>
-
-                <!-- Feedback Toast inside Test Area -->
-                <div id="feedbackToast" class="hidden absolute top-6 px-4 py-2 rounded-xl text-xs font-bold transition transform -translate-y-2 opacity-0"></div>
-            </div>
-        </section>
-
-        <!-- VIEW 3: LIKERT SUBJECTIVE SURVEY -->
-        <section id="viewSurvey" class="hidden max-w-2xl mx-auto space-y-6">
-            <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-2xl space-y-6">
-                <div class="text-center space-y-1">
-                    <div class="w-12 h-12 bg-indigo-500/10 text-indigo-400 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">
-                        <i class="fa-solid fa-clipboard-question"></i>
-                    </div>
-                    <h2 class="text-lg font-bold text-white">Đánh Giá Mức Độ Chủ Quan</h2>
-                    <p class="text-xs text-slate-400">Vui lòng hoàn thành tự đánh giá (Thang điểm 1 - 10) sau khi kết thúc lượt thử nghiệm</p>
-                </div>
-
-                <form id="surveyForm" onsubmit="return false;" class="space-y-6">
-                    <!-- Rating 1: Focus Level -->
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center text-xs">
-                            <label class="font-medium text-slate-200">1. Mức độ tập trung tự đánh giá:</label>
-                            <span id="valFocus" class="font-bold text-indigo-400 text-sm">7 / 10</span>
-                        </div>
-                        <input type="range" id="rateFocus" min="1" max="10" value="7" class="w-full accent-indigo-500 bg-slate-700 h-2 rounded-lg cursor-pointer">
-                        <div class="flex justify-between text-[10px] text-slate-500">
-                            <span>1: Rất xao nhãng</span>
-                            <span>5: Bình thường</span>
-                            <span>10: Cực kỳ tập trung</span>
-                        </div>
-                    </div>
-
-                    <!-- Rating 2: Sound Pleasantness -->
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center text-xs">
-                            <label class="font-medium text-slate-200">2. Mức độ dễ chịu của môi trường âm thanh:</label>
-                            <span id="valPleasant" class="font-bold text-emerald-400 text-sm">7 / 10</span>
-                        </div>
-                        <input type="range" id="ratePleasant" min="1" max="10" value="7" class="w-full accent-emerald-500 bg-slate-700 h-2 rounded-lg cursor-pointer">
-                        <div class="flex justify-between text-[10px] text-slate-500">
-                            <span>1: Khó chịu / Gây ức chế</span>
-                            <span>5: Bình thường</span>
-                            <span>10: Rất dễ chịu / êm tai</span>
-                        </div>
-                    </div>
-
-                    <!-- Rating 3: Fatigue / Drowsiness -->
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center text-xs">
-                            <label class="font-medium text-slate-200">3. Mức độ buồn ngủ / mệt mỏi:</label>
-                            <span id="valFatigue" class="font-bold text-amber-400 text-sm">3 / 10</span>
-                        </div>
-                        <input type="range" id="rateFatigue" min="1" max="10" value="3" class="w-full accent-amber-500 bg-slate-700 h-2 rounded-lg cursor-pointer">
-                        <div class="flex justify-between text-[10px] text-slate-500">
-                            <span>1: Rất tỉnh táo</span>
-                            <span>5: Hơi mỏi</span>
-                            <span>10: Rất buồn ngủ / Mệt</span>
-                        </div>
-                    </div>
-
-                    <button type="button" id="btnSubmitSurvey" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-lg transition">
-                        XÁC NHẬN & XEM KẾT QUẢ <i class="fa-solid fa-arrow-right ml-1"></i>
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- VIEW 4: TEST RESULTS SUMMARY -->
-        <section id="viewResults" class="hidden max-w-4xl mx-auto space-y-6">
-            <!-- Header Summary Box -->
-            <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-xl flex flex-wrap justify-between items-center gap-4">
                 <div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400">Báo Cáo Kết Quả Thi</span>
-                        <span id="resConditionTag" class="px-2.5 py-0.5 text-[11px] bg-slate-700 text-slate-200 rounded-full">--</span>
-                    </div>
-                    <h2 class="text-2xl font-bold text-white mt-1">Học sinh: <span id="resStudentId">HS01</span></h2>
-                    <p class="text-xs text-slate-400 mt-0.5" id="resTimestamp">--</p>
-                </div>
-
-                <div class="flex gap-2">
-                    <button id="btnSaveToHistory" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-xl text-xs flex items-center gap-1.5 shadow transition">
-                        <i class="fa-solid fa-floppy-disk"></i> Lưu Vào Lịch Sử
-                    </button>
-                    <button id="btnRestartTest" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl text-xs flex items-center gap-1.5 transition">
-                        <i class="fa-solid fa-rotate-right"></i> Làm Lại
-                    </button>
-                </div>
-            </div>
-
-            <!-- Key Metrics Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div class="bg-slate-800/60 border border-slate-700 p-4 rounded-2xl">
-                    <div class="text-slate-400 text-xs font-medium">Độ Chính Xác</div>
-                    <div class="text-2xl font-extrabold text-emerald-400 mt-1" id="resAccuracy">0%</div>
-                    <div class="text-[10px] text-slate-500 mt-0.5">Tỷ lệ phản ứng đúng</div>
-                </div>
-
-                <div class="bg-slate-800/60 border border-slate-700 p-4 rounded-2xl">
-                    <div class="text-slate-400 text-xs font-medium">Thời Gian Phản Ứng TB</div>
-                    <div class="text-2xl font-extrabold text-indigo-400 mt-1" id="resMeanRT">0 ms</div>
-                    <div class="text-[10px] text-slate-500 mt-0.5">Thời gian nhận thức</div>
-                </div>
-
-                <div class="bg-slate-800/60 border border-slate-700 p-4 rounded-2xl">
-                    <div class="text-slate-400 text-xs font-medium">Độ Biến Thiên (SD)</div>
-                    <div class="text-2xl font-extrabold text-amber-400 mt-1" id="resSdRT">0 ms</div>
-                    <div class="text-[10px] text-slate-500 mt-0.5">Độ ổn định duy trì</div>
-                </div>
-
-                <div class="bg-slate-800/60 border border-slate-700 p-4 rounded-2xl">
-                    <div class="text-slate-400 text-xs font-medium">Tổng Số Lỗi</div>
-                    <div class="text-2xl font-extrabold text-rose-400 mt-1" id="resTotalErrors">0</div>
-                    <div class="text-[10px] text-slate-500 mt-0.5" id="resSubErrors">Bấm sớm: 0 | Bỏ sót: 0</div>
-                </div>
-            </div>
-
-            <!-- Chart & Detail Table -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Reaction Time Trend Chart -->
-                <div class="lg:col-span-2 bg-slate-800/90 border border-slate-700/80 p-5 rounded-2xl shadow-xl flex flex-col justify-between">
-                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-chart-line text-indigo-400"></i> Biểu Đồ Thời Gian Phản Ứng Qua Các Lượt (Sustained Attention)
-                    </h3>
-                    <div class="h-64 w-full relative">
-                        <canvas id="chartReactionTime"></canvas>
+                    <label class="block text-sm font-medium mb-2 text-slate-300">Mã Học Sinh (Subject ID) <span class="text-rose-500">*</span></label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user absolute left-4 top-3.5 text-slate-500"></i>
+                        <input type="text" id="subject-id" placeholder="VD: HS01, HS02..." class="w-full bg-slate-900 border border-slate-700 rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:border-indigo-500 text-slate-100">
                     </div>
                 </div>
 
-                <!-- Subjective Scores Card -->
-                <div class="bg-slate-800/90 border border-slate-700/80 p-5 rounded-2xl shadow-xl space-y-4">
-                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-user-check text-indigo-400"></i> Kết Quả Tự Đánh Giá
-                    </h3>
-                    
-                    <div class="space-y-3 pt-2 text-xs">
-                        <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-700/50 flex justify-between items-center">
-                            <span class="text-slate-400">Tập trung tự nhận thức</span>
-                            <span id="resSubjFocus" class="font-bold text-indigo-400 text-sm">0/10</span>
-                        </div>
-                        <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-700/50 flex justify-between items-center">
-                            <span class="text-slate-400">Độ dễ chịu âm thanh</span>
-                            <span id="resSubjPleasant" class="font-bold text-emerald-400 text-sm">0/10</span>
-                        </div>
-                        <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-700/50 flex justify-between items-center">
-                            <span class="text-slate-400">Mức mệt mỏi / buồn ngủ</span>
-                            <span id="resSubjFatigue" class="font-bold text-amber-400 text-sm">0/10</span>
-                        </div>
-                    </div>
-
-                    <div class="p-3 bg-slate-900/40 rounded-xl border border-slate-700/30 text-[11px] text-slate-400">
-                        <p class="font-semibold text-slate-300 mb-1"><i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i>Nhận xét sơ bộ:</p>
-                        <p id="resInterpretText">Đang phân tích dữ liệu...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- VIEW 5: USER GUIDE SECTION (MỚI BỔ SUNG) -->
-        <section id="viewGuide" class="hidden max-w-4xl mx-auto space-y-6">
-            <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-2xl space-y-6">
-                <div class="border-b border-slate-700 pb-4 flex items-center gap-3">
-                    <div class="p-3 bg-indigo-500/10 rounded-xl text-indigo-400 text-xl">
-                        <i class="fa-solid fa-book-open"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-bold text-white">Hướng Dẫn Sử Dụng Hệ Thống Thực Nghiệm</h2>
-                        <p class="text-xs text-slate-400">Quy trình các bước tiến hành thu thập dữ liệu phản ứng thị giác CPT</p>
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-slate-300">Điều Kiện Âm Thanh (Audio Condition) <span class="text-rose-500">*</span></label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <label class="cursor-pointer border border-slate-700 bg-slate-900/50 hover:border-slate-500 rounded-xl p-4 flex items-start gap-3 transition">
+                            <input type="radio" name="audio_cond" value="control" checked class="mt-1 text-indigo-600 focus:ring-0">
+                            <div>
+                                <p class="font-medium text-sm">Đối chứng (Control)</p>
+                                <p class="text-xs text-slate-400">Không phát âm thanh (0 Hz)</p>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer border border-slate-700 bg-slate-900/50 hover:border-slate-500 rounded-xl p-4 flex items-start gap-3 transition">
+                            <input type="radio" name="audio_cond" value="low" class="mt-1 text-indigo-600 focus:ring-0">
+                            <div>
+                                <p class="font-medium text-sm text-emerald-400">Dải Tần Thấp</p>
+                                <p class="text-xs text-slate-400">Tần số 250 Hz (Sine wave)</p>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer border border-slate-700 bg-slate-900/50 hover:border-slate-500 rounded-xl p-4 flex items-start gap-3 transition">
+                            <input type="radio" name="audio_cond" value="mid" class="mt-1 text-indigo-600 focus:ring-0">
+                            <div>
+                                <p class="font-medium text-sm text-amber-400">Dải Tần Trung</p>
+                                <p class="text-xs text-slate-400">Tần số 1,000 Hz (Sine wave)</p>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer border border-slate-700 bg-slate-900/50 hover:border-slate-500 rounded-xl p-4 flex items-start gap-3 transition">
+                            <input type="radio" name="audio_cond" value="high" class="mt-1 text-indigo-600 focus:ring-0">
+                            <div>
+                                <p class="font-medium text-sm text-purple-400">Dải Tần Cao</p>
+                                <p class="text-xs text-slate-400">Tần số 4,000 Hz (Sine wave)</p>
+                            </div>
+                        </label>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Step 1 -->
-                    <div class="bg-slate-900/60 border border-slate-700/80 p-4 rounded-xl space-y-2">
-                        <div class="flex items-center gap-2 text-indigo-400 font-bold text-xs uppercase tracking-wider">
-                            <span class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-xs">1</span>
-                            Chuẩn bị thiết bị
-                        </div>
-                        <p class="text-xs text-slate-300 leading-relaxed">
-                            • Đeo <strong>tai nghe stereo</strong> để đảm bảo khả năng cách âm và cảm nhận tần số rõ ràng.<br>
-                            • Điều chỉnh âm lượng thiết bị ở mức vừa phải (khoảng 30-50%).<br>
-                            • Ngồi ở không gian yên tĩnh, không bị làm phiền.
-                        </p>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Số lượt thử nghiệm (Trials)</label>
+                        <select id="trial-count" class="w-full bg-slate-900 border border-slate-700 rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-slate-100">
+                            <option value="15">15 Lượt (Khuyến nghị chuẩn)</option>
+                            <option value="10">10 Lượt (Thử nhanh)</option>
+                            <option value="20">20 Lượt (Độ chính xác cao)</option>
+                        </select>
                     </div>
-
-                    <!-- Step 2 -->
-                    <div class="bg-slate-900/60 border border-slate-700/80 p-4 rounded-xl space-y-2">
-                        <div class="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider">
-                            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-xs">2</span>
-                            Thiết lập thông số
-                        </div>
-                        <p class="text-xs text-slate-300 leading-relaxed">
-                            • Nhập <strong>Mã Học Sinh</strong> (ví dụ: HS01, HS02...).<br>
-                            • Chọn <strong>Điều kiện âm thanh</strong> được phân công (0 Hz, 250 Hz, 1000 Hz hoặc 4000 Hz).<br>
-                            • Nhấn nút <em>"Bật Nghe Thử Âm Thanh"</em> để kiểm tra trước.
-                        </p>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="bg-slate-900/60 border border-slate-700/80 p-4 rounded-xl space-y-2">
-                        <div class="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider">
-                            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center text-xs">3</span>
-                            Thực hiện Bài Test
-                        </div>
-                        <p class="text-xs text-slate-300 leading-relaxed">
-                            • Nhấn <strong>"BẮT ĐẦU BÀI KIỂM TRA"</strong>.<br>
-                            • Đặt ngón tay lên phím <kbd class="px-1 bg-slate-800 border border-slate-600 rounded text-amber-300">Spacebar</kbd> (hoặc chuẩn bị chạm vào màn hình).<br>
-                            • Ngay khi xuất hiện <strong>Vòng tròn màu xanh lá</strong>, phản ứng bấm thật nhanh!
-                        </p>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="bg-slate-900/60 border border-slate-700/80 p-4 rounded-xl space-y-2">
-                        <div class="flex items-center gap-2 text-purple-400 font-bold text-xs uppercase tracking-wider">
-                            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center text-xs">4</span>
-                            Lưu dữ liệu & Xuất CSV
-                        </div>
-                        <p class="text-xs text-slate-300 leading-relaxed">
-                            • Sau khi kết thúc, hoàn thành bảng khảo sát mức độ mệt mỏi/tập trung.<br>
-                            • Nhấn <strong>"Lưu Vào Lịch Sử"</strong>.<br>
-                            • Vào tab <strong>Dữ liệu</strong> và nhấn <strong>"Xuất CSV Báo Cáo"</strong> để lấy file số liệu cho đề tài.
-                        </p>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Thử Âm Thanh Trước Làm Bài</label>
+                        <button type="button" onclick="testAudio()" class="w-full bg-slate-700 hover:bg-slate-600 text-slate-200 py-3 rounded-xl font-medium transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-volume-high"></i> Bật Nghe Thử Âm Thanh
+                        </button>
                     </div>
                 </div>
 
-                <div class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs text-amber-300 flex items-center gap-2">
-                    <i class="fa-solid fa-triangle-exclamation text-base"></i>
-                    <span><strong>Lưu ý quan trọng:</strong> Tuyệt đối không nhấn phím trước khi tín hiệu xuất hiện! Mọi lượt nhấn sớm đều tính là Lỗi (Early Click).</span>
+                <div>
+                    <div class="flex justify-between text-sm mb-1">
+                        <span class="text-slate-300">Cường độ âm thanh (Volume)</span>
+                        <span id="vol-val" class="text-slate-400">30%</span>
+                    </div>
+                    <input type="range" id="volume-range" min="5" max="100" value="30" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500" oninput="document.getElementById('vol-val').innerText = this.value + '%'">
                 </div>
+
+                <div class="p-4 bg-slate-900/60 border border-slate-700/80 rounded-xl text-xs text-slate-300 space-y-1">
+                    <p><i class="fa-solid fa-circle-info text-indigo-400 mr-1"></i> <strong>Hướng dẫn nhanh:</strong> Bấm phím <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-600 rounded text-amber-300">Spacebar</kbd> hoặc nút **PHẢN ỨNG** ngay lập tức khi xuất hiện VÒNG TRÒN XANH LÁ trên màn hình.</p>
+                </div>
+
+                <!-- BỔ SUNG: MỤC ĐIỀU KHOẢN & BẢO MẬT -->
+                <div class="border-t border-slate-700/80 pt-5 mt-4 space-y-3">
+                    <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-shield-halved text-emerald-400"></i> Điều khoản tự nguyện & Bảo mật dữ liệu
+                    </h4>
+                    <div class="bg-slate-900/80 border border-slate-700/60 rounded-xl p-3.5 text-xs text-slate-400 space-y-1.5 leading-relaxed">
+                        <p>• <strong>Mục đích:</strong> Phục vụ đề tài Nghiên cứu Khoa học Kỹ thuật dành cho học sinh THPT.</p>
+                        <p>• <strong>Bảo mật:</strong> Mọi dữ liệu thu thập (thời gian phản ứng, tỷ lệ chính xác) hoàn toàn ẩn danh thông qua Mã Mã Học Sinh, không thu thập thông tin định danh cá nhân.</p>
+                        <p>• <strong>Quyền lợi:</strong> Học sinh có quyền dừng thực nghiệm bất cứ lúc nào nếu cảm thấy mệt mỏi hoặc khó chịu với âm thanh.</p>
+                    </div>
+                    <label class="flex items-center gap-3 cursor-pointer pt-1">
+                        <input type="checkbox" id="consent-check" class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-900 border-slate-700">
+                        <span class="text-xs text-slate-300 font-medium">Tôi đã hiểu rõ mục đích và tự nguyện tham gia bài thử nghiệm này.</span>
+                    </label>
+                </div>
+
+                <button onclick="startTest()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-lg">
+                    <i class="fa-solid fa-play"></i> BẮT ĐẦU BÀI KIỂM TRA
+                </button>
+            </div>
+
+            <!-- KHU VỰC THỰC NGHIỆM (ẢN BAN ĐẦU) -->
+            <div id="test-area" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center space-y-6">
+                <div class="flex justify-between items-center text-sm text-slate-400 border-b border-slate-700 pb-4">
+                    <span>Lượt thực nghiệm: <strong id="current-trial" class="text-white">0</strong> / <span id="total-trials">15</span></span>
+                    <span>Tần số: <strong id="active-cond-name" class="text-indigo-400">---</strong></span>
+                </div>
+
+                <div id="stimulus-box" class="h-64 bg-slate-900 border-2 border-dashed border-slate-700 rounded-2xl flex items-center justify-center relative overflow-hidden transition-all duration-100">
+                    <p id="stimulus-text" class="text-slate-500 text-sm">Chuẩn bị...</p>
+                    <div id="target-circle" class="hidden w-28 h-28 bg-emerald-500 rounded-full shadow-[0_0_35px_rgba(16,185,129,0.6)] animate-pulse"></div>
+                </div>
+
+                <button id="btn-react" onclick="handleReaction()" class="w-full py-6 bg-slate-700 hover:bg-slate-600 text-white font-bold text-xl rounded-xl transition active:scale-98">
+                    PHẢN ỨNG (SPACEBAR)
+                </button>
+            </div>
+
+            <!-- KẾT QUẢ CÁ NHÂN -->
+            <div id="result-panel" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-6">
+                <div class="text-center space-y-2">
+                    <div class="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-2xl">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold">Hoàn Thành Thử Nghiệm!</h3>
+                    <p class="text-sm text-slate-400">Dữ liệu đã được ghi nhận tự động vào hệ thống.</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-slate-900 p-4 rounded-xl text-center">
+                        <p class="text-xs text-slate-400 mb-1">Thời gian TB (Mean RT)</p>
+                        <p id="res-mean-rt" class="text-xl font-bold text-indigo-400">0 ms</p>
+                    </div>
+                    <div class="bg-slate-900 p-4 rounded-xl text-center">
+                        <p class="text-xs text-slate-400 mb-1">Độ lệch chuẩn (SD)</p>
+                        <p id="res-sd-rt" class="text-xl font-bold text-slate-200">0 ms</p>
+                    </div>
+                    <div class="bg-slate-900 p-4 rounded-xl text-center">
+                        <p class="text-xs text-slate-400 mb-1">Chính xác (Accuracy)</p>
+                        <p id="res-acc" class="text-xl font-bold text-emerald-400">0%</p>
+                    </div>
+                    <div class="bg-slate-900 p-4 rounded-xl text-center">
+                        <p class="text-xs text-slate-400 mb-1">Số lỗi bấm sớm</p>
+                        <p id="res-errors" class="text-xl font-bold text-rose-400">0</p>
+                    </div>
+                </div>
+
+                <button onclick="resetTest()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-xl transition">
+                    Làm Bài Thử Nghiệm Khác
+                </button>
             </div>
         </section>
 
-        <!-- VIEW 6: LOCAL HISTORY & CSV EXPORT -->
-        <section id="viewHistory" class="hidden max-w-5xl mx-auto space-y-6">
-            <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-2xl space-y-4">
-                <div class="flex flex-wrap justify-between items-center gap-4">
-                    <div>
-                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-database text-indigo-400"></i> Quản Lý Dữ Liệu Thực Nghiệm (LocalStorage)
-                        </h2>
-                        <p class="text-xs text-slate-400">Danh sách bộ dữ liệu đã thu thập của học sinh phục vụ đề tài KHKT</p>
-                    </div>
+        <!-- TAB 2: HƯỚNG DẪN -->
+        <section id="tab-guide" class="hidden space-y-6">
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-4">
+                <h3 class="text-xl font-bold text-indigo-400 border-b border-slate-700 pb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> Hướng Dẫn Dành Cho Học Sinh Thực Nghiệm
+                </h3>
+                <ol class="list-decimal list-inside space-y-3 text-slate-300 text-sm leading-relaxed">
+                    <li><strong class="text-white">Chuẩn bị tai nghe:</strong> Đeo tai nghe có dây hoặc không dây, đảm bảo âm thanh phát đều 2 bên.</li>
+                    <li><strong class="text-white">Nhập Mã Học Sinh:</strong> Điền chính xác Mã do nhóm nghiên cứu cấp (VD: HS01).</li>
+                    <li><strong class="text-white">Thực hiện bài test:</strong> Nhìn vào khung thử nghiệm. Khi thấy <span class="text-emerald-400 font-bold">VÒNG TRÒN XANH LÁ</span> xuất hiện, bấm phím <kbd class="px-2 py-0.5 bg-slate-700 border border-slate-600 rounded text-amber-300">Spacebar</kbd> thật nhanh.</li>
+                    <li><strong class="text-white">Lưu ý:</strong> Không bấm trước khi vòng tròn xuất hiện (sẽ bị tính lỗi bấm sớm). Giữ tập trung tối đa trong suốt 15 lượt.</li>
+                </ol>
+            </div>
+        </section>
 
-                    <div class="flex flex-wrap gap-2">
-                        <button id="btnExportCSV" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-xl text-xs flex items-center gap-1.5 shadow transition">
-                            <i class="fa-solid fa-file-csv"></i> Xuất CSV Báo Cáo
+        <!-- TAB 3: QUẢN LÝ DỮ LIỆU -->
+        <section id="tab-data" class="hidden space-y-6">
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-4">
+                <div class="flex justify-between items-center flex-wrap gap-4 border-b border-slate-700 pb-4">
+                    <div>
+                        <h3 class="text-xl font-bold">Bảng Dữ Liệu Thực Nghiệm</h3>
+                        <p class="text-xs text-slate-400 mt-1">Dữ liệu lưu trữ trực tiếp trên LocalStorage của trình duyệt</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2">
+                            <i class="fa-solid fa-file-excel"></i> Xuất CSV Báo Cáo
                         </button>
-                        <button id="btnClearHistory" class="px-3 py-2 bg-rose-950/60 hover:bg-rose-900 text-rose-300 border border-rose-800/50 font-medium rounded-xl text-xs flex items-center gap-1.5 transition">
-                            <i class="fa-solid fa-trash"></i> Xóa Tất Cả
+                        <button onclick="clearData()" class="bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 px-3 py-2 rounded-xl text-sm font-semibold transition">
+                            <i class="fa-solid fa-trash"></i> Xóa
                         </button>
                     </div>
                 </div>
 
-                <!-- History Table -->
-                <div class="overflow-x-auto border border-slate-700 rounded-xl">
-                    <table class="w-full text-left text-xs text-slate-300">
-                        <thead class="bg-slate-900/90 text-slate-400 uppercase text-[10px] font-bold border-b border-slate-700">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-slate-300">
+                        <thead class="bg-slate-900/60 text-slate-400 text-xs uppercase">
                             <tr>
                                 <th class="p-3">Mã HS</th>
-                                <th class="p-3">Điều Kiện</th>
-                                <th class="p-3">Tần Số</th>
-                                <th class="p-3">Độ Chính Xác</th>
-                                <th class="p-3">RT Trung Bình</th>
-                                <th class="p-3">Số Lỗi</th>
-                                <th class="p-3">Tập Trung (1-10)</th>
-                                <th class="p-3">Dễ Chịu (1-10)</th>
-                                <th class="p-3">Hành Động</th>
+                                <th class="p-3">Điều kiện</th>
+                                <th class="p-3">Mean RT (ms)</th>
+                                <th class="p-3">SD (ms)</th>
+                                <th class="p-3">Độ chính xác</th>
+                                <th class="p-3">Lỗi bấm sớm</th>
+                                <th class="p-3">Thời gian</th>
                             </tr>
                         </thead>
-                        <tbody id="tableHistoryBody" class="divide-y divide-slate-700/60 bg-slate-800/40">
-                            <!-- Injected dynamically -->
+                        <tbody id="data-table-body" class="divide-y divide-slate-700/50">
+                            <!-- JS Render dữ liệu ở đây -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <!-- VIEW 7: PROPOSAL DETAILS -->
-        <section id="viewProposal" class="hidden max-w-4xl mx-auto space-y-6">
-            <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-2xl space-y-4 text-xs leading-relaxed text-slate-300">
-                <div class="border-b border-slate-700 pb-4">
-                    <span class="px-2.5 py-1 bg-indigo-500/20 text-indigo-300 rounded-md text-[11px] font-semibold">KHKT RESEARCH PROPOSAL V0.2</span>
-                    <h2 class="text-xl font-bold text-white mt-2">Nghiên cứu ảnh hưởng của các dải tần âm thanh đến khả năng duy trì tập trung và hiệu suất xử lý thông tin của học sinh THPT</h2>
-                    <p class="text-slate-400 mt-1">Tác giả: <strong>Bùi Lê Quang Minh & Bùi Vũ Khánh Thư</strong></p>
-                </div>
-
-                <div class="space-y-3">
-                    <h3 class="text-sm font-bold text-indigo-400 uppercase tracking-wide">I. Giả Thuyết Nghiên Cứu</h3>
-                    <p><strong>Giả thuyết không (H₀):</strong> Các dải tần âm thanh khác nhau không tạo ra sự khác biệt đáng kể về khả năng duy trì tập trung và hiệu suất xử lý thông tin của học sinh THPT.</p>
-                    <p><strong>Giả thuyết nghiên cứu (H₁):</strong> Các dải tần âm thanh khác nhau tạo ra sự khác biệt đáng kể về khả năng duy trì tập trung và/hoặc hiệu suất xử lý thông tin của học sinh THPT.</p>
-                </div>
-
-                <div class="space-y-3">
-                    <h3 class="text-sm font-bold text-indigo-400 uppercase tracking-wide">II. 4 Điều Kiện Thực Nghiệm</h3>
-                    <ul class="list-disc pl-5 space-y-1">
-                        <li><strong>Điều kiện 1 (Đối chứng):</strong> Không phát âm thanh (0 Hz).</li>
-                        <li><strong>Điều kiện 2 (Dải tần thấp):</strong> Tần số đại diện 250 Hz (Sine wave).</li>
-                        <li><strong>Điều kiện 3 (Dải tần trung):</strong> Tần số đại diện 1,000 Hz (Sine wave).</li>
-                        <li><strong>Điều kiện 4 (Dải tần cao):</strong> Tần số đại diện 4,000 Hz (Sine wave).</li>
-                    </ul>
+        <!-- TAB 4: THÔNG TIN ĐỀ TÀI -->
+        <section id="tab-project" class="hidden space-y-6">
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-4">
+                <h3 class="text-xl font-bold text-indigo-400 border-b border-slate-700 pb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap"></i> Đề Tài Nghiên Cứu Khoa Học Kỹ Thuật
+                </h3>
+                <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
+                    <p><strong>Tên đề tài:</strong> Nghiên cứu ảnh hưởng của các dải tần số âm thanh đến thời gian phản ứng và khả năng duy trì sự tập trung của học sinh THPT.</p>
+                    <p><strong>Học sinh thực hiện:</strong> Bùi Lê Quang Minh & Bùi Vũ Khánh Thư</p>
+                    <p><strong>Giả thuyết $H_1$:</strong> Sự hiện diện của âm thanh tần số thấp (250 Hz) có khả năng làm giảm thời gian phản ứng thị giác (Mean RT) và tăng độ ổn định tập trung so với điều kiện đối chứng.</p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
-        <p>© 2026 Đề tài Nghiên cứu Khoa học Kỹ thuật Học sinh THPT - Bùi Lê Quang Minh & Bùi Vũ Khánh Thư</p>
+        © 2026 Đề tài Nghiên cứu Khoa học Kỹ thuật Học sinh THPT - Bùi Lê Quang Minh & Bùi Vũ Khánh Thư
     </footer>
 
+    <!-- LOGIC JAVASCRIPT -->
     <script>
-        // Global Application State
-        const state = {
-            studentId: '',
-            soundCondition: 0, // 0, 250, 1000, 4000
-            totalTrials: 15,
-            volume: 0.3,
-            
-            // Current Trial Run Metrics
-            currentTrialIndex: 0,
-            trialResults: [], // Array of { trialNum, rt, status }
-            stimulusActive: false,
-            stimulusStartTime: 0,
-            trialTimer: null,
-            isTestRunning: false,
-            
-            // Audio Web API
-            audioCtx: null,
-            oscillator: null,
-            gainNode: null,
-            isTestingSound: false,
+        let testData = JSON.parse(localStorage.getItem('psych_test_data') || '[]');
+        let audioCtx = null;
+        let currentOsc = null;
+        let currentGain = null;
+        
+        let trialConfig = { subjectId: '', condition: 'control', maxTrials: 15, volume: 0.3 };
+        let state = { activeTrial: 0, reactionTimes: [], earlyErrors: 0, startTime: 0, waitingForStimulus: false, timeoutId: null };
 
-            // Subjective Survey Data
-            surveyData: {
-                focus: 7,
-                pleasant: 7,
-                fatigue: 3
-            },
+        document.addEventListener('DOMContentLoaded', updateTable);
 
-            // Chart Instance
-            rtChart: null,
+        function switchTab(tabName) {
+            ['test', 'guide', 'data', 'project'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-tab-${t}`).classList.remove('active-tab');
+                document.getElementById(`btn-tab-${t}`).classList.add('bg-slate-800', 'text-slate-300');
+            });
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`btn-tab-${tabName}`);
+            activeBtn.classList.add('active-tab');
+            activeBtn.classList.remove('bg-slate-800', 'text-slate-300');
+            if(tabName === 'data') updateTable();
+        }
 
-            // LocalStorage History
-            history: []
-        };
-
-        // Initialize Web Audio Context & Oscillator Tone Generator
-        function initAudioContext() {
-            if (!state.audioCtx) {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                state.audioCtx = new AudioContext();
-            }
-            if (state.audioCtx.state === 'suspended') {
-                state.audioCtx.resume();
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
         }
 
-        function startTone(frequency, volume) {
-            if (frequency === 0) return; // Control condition
-            initAudioContext();
+        function playTone(freq, vol) {
+            initAudio();
             stopTone();
-
-            try {
-                state.oscillator = state.audioCtx.createOscillator();
-                state.gainNode = state.audioCtx.createGain();
-
-                state.oscillator.type = 'sine';
-                state.oscillator.frequency.setValueAtTime(frequency, state.audioCtx.currentTime);
-
-                // Smooth volume ramp to prevent clicking
-                state.gainNode.gain.setValueAtTime(0, state.audioCtx.currentTime);
-                state.gainNode.gain.linearRampToValueAtTime(volume, state.audioCtx.currentTime + 0.05);
-
-                state.oscillator.connect(state.gainNode);
-                state.gainNode.connect(state.audioCtx.destination);
-
-                state.oscillator.start();
-            } catch (e) {
-                console.error("Audio API error:", e);
-            }
+            if (freq === 0) return;
+            currentOsc = audioCtx.createOscillator();
+            currentGain = audioCtx.createGain();
+            currentOsc.type = 'sine';
+            currentOsc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            currentGain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            currentOsc.connect(currentGain);
+            currentGain.connect(audioCtx.destination);
+            currentOsc.start();
         }
 
         function stopTone() {
-            if (state.oscillator) {
-                try {
-                    if (state.gainNode && state.audioCtx) {
-                        state.gainNode.gain.linearRampToValueAtTime(0.001, state.audioCtx.currentTime + 0.05);
-                        setTimeout(() => {
-                            if (state.oscillator) {
-                                state.oscillator.stop();
-                                state.oscillator.disconnect();
-                                state.oscillator = null;
-                            }
-                        }, 60);
-                    } else {
-                        state.oscillator.stop();
-                        state.oscillator.disconnect();
-                        state.oscillator = null;
-                    }
-                } catch (e) {
-                    state.oscillator = null;
-                }
+            if (currentOsc) {
+                try { currentOsc.stop(); } catch(e){}
+                currentOsc.disconnect();
+                currentOsc = null;
             }
         }
 
-        function showView(viewId) {
-            ['viewSetup', 'viewTest', 'viewSurvey', 'viewResults', 'viewGuide', 'viewHistory', 'viewProposal'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.classList.add('hidden');
-            });
-            const target = document.getElementById(viewId);
-            if (target) target.classList.remove('hidden');
+        function testAudio() {
+            initAudio();
+            const cond = document.querySelector('input[name="audio_cond"]:checked').value;
+            const vol = parseFloat(document.getElementById('volume-range').value) / 100;
+            let freq = 0;
+            if(cond === 'low') freq = 250;
+            else if(cond === 'mid') freq = 1000;
+            else if(cond === 'high') freq = 4000;
 
-            // Reset navigation active styles
-            document.getElementById('btnNavHome').className = (viewId === 'viewSetup' || viewId === 'viewTest') ? 
-                'px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white transition flex items-center gap-1.5' : 
-                'px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center gap-1.5 border border-slate-700';
-
-            document.getElementById('btnNavGuide').className = (viewId === 'viewGuide') ? 
-                'px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white transition flex items-center gap-1.5' : 
-                'px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center gap-1.5 border border-slate-700';
-            
-            document.getElementById('btnNavHistory').className = (viewId === 'viewHistory') ? 
-                'px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white transition flex items-center gap-1.5' : 
-                'px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center gap-1.5 border border-slate-700';
-            
-            document.getElementById('btnNavProposal').className = (viewId === 'viewProposal') ? 
-                'px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white transition flex items-center gap-1.5' : 
-                'px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center gap-1.5 border border-slate-700';
+            if(freq === 0) {
+                alert("Điều kiện Đối chứng không có âm thanh (0 Hz).");
+                return;
+            }
+            playTone(freq, vol);
+            setTimeout(stopTone, 1500);
         }
 
-        function startReactionTest() {
-            state.studentId = document.getElementById('inputStudentId').value.trim() || 'HS01';
-            const selectedCond = document.querySelector('input[name="soundCondition"]:checked');
-            state.soundCondition = parseInt(selectedCond ? selectedCond.value : '0');
-            state.totalTrials = parseInt(document.getElementById('selectTrials').value);
-            state.volume = parseFloat(document.getElementById('inputVolume').value) / 100;
-
-            state.currentTrialIndex = 0;
-            state.trialResults = [];
-            state.isTestRunning = true;
-
-            // Stop preview sound if playing
-            if (state.isTestingSound) {
-                stopTone();
-                state.isTestingSound = false;
-                document.getElementById('txtTestSound').textContent = 'Bật Nghe Thử Âm Thanh';
+        function startTest() {
+            const sid = document.getElementById('subject-id').value.trim();
+            if (!sid) {
+                alert('Vui lòng nhập Mã Học Sinh (Subject ID) trước khi bắt đầu!');
+                return;
             }
 
-            // Update Header Displays in Test View
-            document.getElementById('displayStudentId').textContent = state.studentId;
-            const condMap = { 0: 'Đối chứng (0 Hz)', 250: 'Dải thấp (250 Hz)', 1000: 'Dải trung (1000 Hz)', 4000: 'Dải cao (4000 Hz)' };
-            document.getElementById('displayConditionBadge').textContent = condMap[state.soundCondition];
-            document.getElementById('displayProgress').textContent = `0 / ${state.totalTrials}`;
-            document.getElementById('displayLiveAvg').textContent = `0 ms`;
-            document.getElementById('displayLiveErrors').textContent = `0`;
-
-            showView('viewTest');
-
-            // Start Tone Generator for Test Session
-            if (state.soundCondition > 0) {
-                startTone(state.soundCondition, state.volume);
+            // KIỂM TRA ĐIỀU KHOẢN TỰ NGUYỆN
+            const consent = document.getElementById('consent-check').checked;
+            if(!consent) {
+                alert('Vui lòng tích chọn đồng ý với Điều khoản tự nguyện & Bảo mật dữ liệu!');
+                return;
             }
 
-            // Begin first trial loop after brief pause
-            setTimeout(nextTrial, 1200);
+            trialConfig.subjectId = sid;
+            trialConfig.condition = document.querySelector('input[name="audio_cond"]:checked').value;
+            trialConfig.maxTrials = parseInt(document.getElementById('trial-count').value);
+            trialConfig.volume = parseFloat(document.getElementById('volume-range').value) / 100;
+
+            document.getElementById('setup-panel').classList.add('hidden');
+            document.getElementById('test-area').classList.remove('hidden');
+            document.getElementById('total-trials').innerText = trialConfig.maxTrials;
+            
+            let condLabel = "Đối chứng (0 Hz)";
+            let freq = 0;
+            if(trialConfig.condition === 'low') { condLabel = "250 Hz (Thấp)"; freq = 250; }
+            if(trialConfig.condition === 'mid') { condLabel = "1000 Hz (Trung)"; freq = 1000; }
+            if(trialConfig.condition === 'high') { condLabel = "4000 Hz (Cao)"; freq = 4000; }
+            document.getElementById('active-cond-name').innerText = condLabel;
+
+            if(freq > 0) playTone(freq, trialConfig.volume);
+
+            state.activeTrial = 0;
+            state.reactionTimes = [];
+            state.earlyErrors = 0;
+
+            nextTrial();
         }
 
         function nextTrial() {
-            if (!state.isTestRunning) return;
-
-            if (state.currentTrialIndex >= state.totalTrials) {
-                // Completed Test!
-                endTestSession();
+            if (state.activeTrial >= trialConfig.maxTrials) {
+                finishTest();
                 return;
             }
 
-            state.stimulusActive = false;
-            hideStimulusCircle();
-            updateTestPrompt("Chuẩn bị...", "Giữ tập trung, vòng tròn xanh lá sẽ xuất hiện ngẫu nhiên!");
+            state.activeTrial++;
+            document.getElementById('current-trial').innerText = state.activeTrial;
+            
+            const box = document.getElementById('stimulus-box');
+            const circle = document.getElementById('target-circle');
+            const text = document.getElementById('stimulus-text');
 
-            // Random Delay between 1500ms and 4000ms
-            const randomDelay = Math.floor(Math.random() * 2500) + 1500;
+            circle.classList.add('hidden');
+            text.classList.remove('hidden');
+            text.innerText = "Chờ tín hiệu...";
+            box.classList.remove('border-emerald-500', 'bg-emerald-950/20');
 
-            state.trialTimer = setTimeout(() => {
-                if (!state.isTestRunning) return;
-                // Show Visual Stimulus
-                state.stimulusActive = true;
-                state.stimulusStartTime = performance.now();
-                showStimulusCircle();
-                updateTestPrompt("BẤM NGAY BAO GIỜ!", "Phản ứng ngay bằng Spacebar hoặc nút bấm!");
-            }, randomDelay);
+            state.waitingForStimulus = true;
+
+            const delay = Math.floor(Math.random() * 2500) + 1500;
+            state.timeoutId = setTimeout(() => {
+                state.waitingForStimulus = false;
+                text.classList.add('hidden');
+                circle.classList.remove('hidden');
+                box.classList.add('border-emerald-500', 'bg-emerald-950/20');
+                state.startTime = performance.now();
+            }, delay);
         }
 
-        function handleUserReaction() {
-            if (!state.isTestRunning) return;
-
-            if (!state.stimulusActive) {
-                // Early Click / False Alarm
-                clearTimeout(state.trialTimer);
-                showToast("BẤM SỚM (LỖI)!", "bg-rose-500", "text-white");
-                
-                state.trialResults.push({
-                    trialNum: state.currentTrialIndex + 1,
-                    rt: 0,
-                    status: 'EARLY'
-                });
-
-                state.currentTrialIndex++;
-                updateLiveStats();
-                setTimeout(nextTrial, 1500);
-            } else {
-                // Correct Reaction
-                const reactionTime = Math.round(performance.now() - state.stimulusStartTime);
-                state.stimulusActive = false;
-                hideStimulusCircle();
-
-                showToast(`${reactionTime} ms`, "bg-emerald-500", "text-white");
-
-                state.trialResults.push({
-                    trialNum: state.currentTrialIndex + 1,
-                    rt: reactionTime,
-                    status: 'CORRECT'
-                });
-
-                state.currentTrialIndex++;
-                updateLiveStats();
+        function handleReaction() {
+            if (state.waitingForStimulus) {
+                clearTimeout(state.timeoutId);
+                state.earlyErrors++;
+                document.getElementById('stimulus-text').innerText = "BẤM SỚM! Bỏ qua lượt này...";
+                state.waitingForStimulus = false;
                 setTimeout(nextTrial, 1200);
+                return;
+            }
+
+            if (state.startTime > 0) {
+                const rt = Math.round(performance.now() - state.startTime);
+                state.reactionTimes.push(rt);
+                state.startTime = 0;
+                nextTrial();
             }
         }
 
-        function updateLiveStats() {
-            document.getElementById('displayProgress').textContent = `${state.currentTrialIndex} / ${state.totalTrials}`;
-            
-            const validRts = state.trialResults.filter(r => r.status === 'CORRECT').map(r => r.rt);
-            const avg = validRts.length ? Math.round(validRts.reduce((a, b) => a + b, 0) / validRts.length) : 0;
-            const errors = state.trialResults.filter(r => r.status !== 'CORRECT').length;
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && !document.getElementById('test-area').classList.contains('hidden')) {
+                e.preventDefault();
+                handleReaction();
+            }
+        });
 
-            document.getElementById('displayLiveAvg').textContent = `${avg} ms`;
-            document.getElementById('displayLiveErrors').textContent = `${errors}`;
-        }
-
-        function showStimulusCircle() {
-            document.getElementById('stimulusCircle').classList.remove('hidden');
-        }
-
-        function hideStimulusCircle() {
-            document.getElementById('stimulusCircle').classList.add('hidden');
-        }
-
-        function updateTestPrompt(main, sub) {
-            document.getElementById('testMainPrompt').textContent = main;
-            document.getElementById('testSubPrompt').textContent = sub;
-        }
-
-        function showToast(text, bgColor, textColor) {
-            const toast = document.getElementById('feedbackToast');
-            toast.textContent = text;
-            toast.className = `absolute top-6 px-4 py-2 rounded-xl text-xs font-bold transition transform translate-y-0 opacity-100 ${bgColor} ${textColor} shadow-lg`;
-            setTimeout(() => {
-                toast.className = "hidden absolute top-6 px-4 py-2 rounded-xl text-xs font-bold transition transform -translate-y-2 opacity-0";
-            }, 1000);
-        }
-
-        function endTestSession() {
-            state.isTestRunning = false;
+        function finishTest() {
             stopTone();
-            showView('viewSurvey');
-        }
+            document.getElementById('test-area').classList.add('hidden');
+            document.getElementById('result-panel').classList.remove('hidden');
 
-        function computeFinalResults() {
-            const correctTrials = state.trialResults.filter(r => r.status === 'CORRECT');
-            const earlyTrials = state.trialResults.filter(r => r.status === 'EARLY');
+            const rts = state.reactionTimes;
+            const mean = rts.length ? Math.round(rts.reduce((a, b) => a + b, 0) / rts.length) : 0;
             
-            const accuracy = Math.round((correctTrials.length / state.totalTrials) * 100);
-            
-            const rts = correctTrials.map(r => r.rt);
-            const meanRt = rts.length ? Math.round(rts.reduce((a, b) => a + b, 0) / rts.length) : 0;
-            
-            // Calculate Standard Deviation (SD) as metric for sustained focus stability
-            let sdRt = 0;
-            if (rts.length > 1) {
-                const variance = rts.reduce((acc, val) => acc + Math.pow(val - meanRt, 2), 0) / (rts.length - 1);
-                sdRt = Math.round(Math.sqrt(variance));
+            let variance = 0;
+            if(rts.length > 1) {
+                variance = rts.reduce((sq, n) => sq + Math.pow(n - mean, 2), 0) / (rts.length - 1);
             }
+            const sd = Math.round(Math.sqrt(variance));
 
-            const totalErrors = earlyTrials.length;
+            const accuracy = Math.round((rts.length / trialConfig.maxTrials) * 100);
 
-            return {
-                studentId: state.studentId,
-                soundCondition: state.soundCondition,
-                totalTrials: state.totalTrials,
-                accuracy,
-                meanRt,
-                sdRt,
-                totalErrors,
-                earlyCount: earlyTrials.length,
-                survey: { ...state.surveyData },
-                trialResults: state.trialResults,
+            document.getElementById('res-mean-rt').innerText = mean + ' ms';
+            document.getElementById('res-sd-rt').innerText = sd + ' ms';
+            document.getElementById('res-acc').innerText = accuracy + '%';
+            document.getElementById('res-errors').innerText = state.earlyErrors;
+
+            const record = {
+                id: trialConfig.subjectId,
+                condition: trialConfig.condition,
+                meanRt: mean,
+                sdRt: sd,
+                accuracy: accuracy,
+                errors: state.earlyErrors,
                 timestamp: new Date().toLocaleString('vi-VN')
             };
+
+            testData.push(record);
+            localStorage.setItem('psych_test_data', JSON.stringify(testData));
+            updateTable();
         }
 
-        function renderResultsView() {
-            const res = computeFinalResults();
-
-            document.getElementById('resStudentId').textContent = res.studentId;
-            const condMap = { 0: 'Đối chứng (0 Hz)', 250: 'Dải thấp (250 Hz)', 1000: 'Dải trung (1000 Hz)', 4000: 'Dải cao (4000 Hz)' };
-            document.getElementById('resConditionTag').textContent = condMap[res.soundCondition];
-            document.getElementById('resTimestamp').textContent = `Thực hiện lúc: ${res.timestamp}`;
-
-            document.getElementById('resAccuracy').textContent = `${res.accuracy}%`;
-            document.getElementById('resMeanRT').textContent = `${res.meanRt} ms`;
-            document.getElementById('resSdRT').textContent = `${res.sdRt} ms`;
-            document.getElementById('resTotalErrors').textContent = `${res.totalErrors}`;
-            document.getElementById('resSubErrors').textContent = `Bấm sớm: ${res.earlyCount} | Bỏ sót: 0`;
-
-            document.getElementById('resSubjFocus').textContent = `${res.survey.focus}/10`;
-            document.getElementById('resSubjPleasant').textContent = `${res.survey.pleasant}/10`;
-            document.getElementById('resSubjFatigue').textContent = `${res.survey.fatigue}/10`;
-
-            // Interpretation Text
-            let interpretation = "";
-            if (res.meanRt < 300) {
-                interpretation = "Tốc độ phản ứng nhận thức rất nhanh. Khả năng tập trung cao.";
-            } else if (res.meanRt < 420) {
-                interpretation = "Tốc độ phản ứng nằm trong mức trung bình chuẩn của lứa tuổi THPT.";
-            } else {
-                interpretation = "Tốc độ phản ứng kéo dài, có dấu hiệu xao nhãng hoặc mệt mỏi.";
-            }
-            if (res.sdRt > 80) {
-                interpretation += " Độ ổn định tập trung giữa các lượt có sự biến thiên lớn.";
-            }
-            document.getElementById('resInterpretText').textContent = interpretation;
-
-            // Render Chart.js
-            renderRtChart(res.trialResults);
-
-            showView('viewResults');
+        function resetTest() {
+            document.getElementById('result-panel').classList.add('hidden');
+            document.getElementById('setup-panel').classList.remove('hidden');
         }
 
-        function renderRtChart(trials) {
-            const ctx = document.getElementById('chartReactionTime').getContext('2d');
-            if (state.rtChart) {
-                state.rtChart.destroy();
-            }
-
-            const labels = trials.map(t => `Lượt ${t.trialNum}`);
-            const data = trials.map(t => t.status === 'CORRECT' ? t.rt : null);
-
-            state.rtChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Thời gian phản ứng (ms)',
-                        data: data,
-                        borderColor: '#6366f1',
-                        backgroundColor: 'rgba(99, 102, 241, 0.15)',
-                        borderWidth: 2,
-                        pointBackgroundColor: '#818cf8',
-                        pointRadius: 5,
-                        fill: true,
-                        tension: 0.2,
-                        spanGaps: false
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                            ticks: { color: '#94a3b8', font: { size: 10 } }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: '#94a3b8', font: { size: 10 } }
-                        }
-                    }
-                }
-            });
-        }
-
-        function loadHistoryFromStorage() {
-            const saved = localStorage.getItem('psych_test_history');
-            if (saved) {
-                try {
-                    state.history = JSON.parse(saved);
-                } catch (e) {
-                    state.history = [];
-                }
-            }
-            document.getElementById('historyCount').textContent = state.history.length;
-            renderHistoryTable();
-        }
-
-        function saveCurrentToHistory() {
-            const res = computeFinalResults();
-            state.history.push(res);
-            localStorage.setItem('psych_test_history', JSON.stringify(state.history));
-            document.getElementById('historyCount').textContent = state.history.length;
-            alert("Đã lưu kết quả lượt thử nghiệm vào bộ nhớ cục bộ!");
-            showView('viewHistory');
-        }
-
-        function renderHistoryTable() {
-            const tbody = document.getElementById('tableHistoryBody');
+        function updateTable() {
+            document.getElementById('data-count').innerText = testData.length;
+            const tbody = document.getElementById('data-table-body');
             tbody.innerHTML = '';
 
-            if (state.history.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-slate-500 text-xs">Chưa có dữ liệu nào được lưu.</td></tr>`;
-                return;
-            }
-
-            state.history.forEach((item, index) => {
+            testData.forEach(item => {
                 const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-700/30 transition";
-                
-                const condMap = { 0: 'Đối chứng', 250: 'Dải thấp', 1000: 'Dải trung', 4000: 'Dải cao' };
-
+                tr.className = "hover:bg-slate-800/40 border-b border-slate-800";
                 tr.innerHTML = `
-                    <td class="p-3 font-semibold text-white">${item.studentId}</td>
-                    <td class="p-3">${condMap[item.soundCondition] || item.soundCondition}</td>
-                    <td class="p-3 text-indigo-400 font-medium">${item.soundCondition} Hz</td>
-                    <td class="p-3 text-emerald-400 font-bold">${item.accuracy}%</td>
-                    <td class="p-3 text-indigo-300 font-bold">${item.meanRt} ms</td>
-                    <td class="p-3 text-rose-400">${item.totalErrors}</td>
-                    <td class="p-3">${item.survey ? item.survey.focus : '--'}</td>
-                    <td class="p-3">${item.survey ? item.survey.pleasant : '--'}</td>
-                    <td class="p-3">
-                        <button onclick="deleteHistoryItem(${index})" class="text-rose-400 hover:text-rose-300 transition" title="Xóa"><i class="fa-solid fa-trash-can"></i></button>
-                    </td>
+                    <td class="p-3 font-semibold text-white">${item.id}</td>
+                    <td class="p-3"><span class="px-2 py-1 bg-slate-800 rounded border border-slate-700 text-xs">${item.condition}</span></td>
+                    <td class="p-3 font-bold text-indigo-400">${item.meanRt} ms</td>
+                    <td class="p-3">${item.sdRt} ms</td>
+                    <td class="p-3 text-emerald-400 font-medium">${item.accuracy}%</td>
+                    <td class="p-3 text-rose-400">${item.errors}</td>
+                    <td class="p-3 text-xs text-slate-500">${item.timestamp}</td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        function deleteHistoryItem(index) {
-            if (confirm("Bạn có chắc chắn muốn xóa lượt đo này?")) {
-                state.history.splice(index, 1);
-                localStorage.setItem('psych_test_history', JSON.stringify(state.history));
-                document.getElementById('historyCount').textContent = state.history.length;
-                renderHistoryTable();
-            }
-        }
-
-        function exportToCSV() {
-            if (state.history.length === 0) {
-                alert("Chưa có dữ liệu để xuất CSV!");
+        function exportCSV() {
+            if(!testData.length) {
+                alert("Chưa có dữ liệu để xuất!");
                 return;
             }
-
-            // Headers aligned with Proposal Table
-            let csvContent = "\uFEFF"; // UTF-8 BOM for Excel
-            csvContent += "Ma_HS,Dieu_Kien_Am_Thanh,Tan_So_Hz,Do_Chinh_Xac_Pct,Thoi_Gian_Phan_Ung_TB_ms,Do_Lech_Chuan_SD_ms,So_Loi,Muc_Do_Tap_Trung_1_10,Muc_Do_De_Chiu_1_10,Muc_Do_Met_Moi_1_10,Thoi_Gian_Do\n";
-
-            const condNames = { 0: 'Doi chung', 250: 'Dai thap', 1000: 'Dai trung', 4000: 'Dai cao' };
-
-            state.history.forEach(item => {
-                const row = [
-                    `"${item.studentId}"`,
-                    `"${condNames[item.soundCondition] || item.soundCondition}"`,
-                    item.soundCondition,
-                    item.accuracy,
-                    item.meanRt,
-                    item.sdRt,
-                    item.totalErrors,
-                    item.survey ? item.survey.focus : '',
-                    item.survey ? item.survey.pleasant : '',
-                    item.survey ? item.survey.fatigue : '',
-                    `"${item.timestamp}"`
-                ];
-                csvContent += row.join(",") + "\n";
+            let csv = "Subject_ID,Audio_Condition,Mean_RT_ms,SD_RT_ms,Accuracy_Percent,Early_Errors,Timestamp\n";
+            testData.forEach(d => {
+                csv += `"${d.id}","${d.condition}",${d.meanRt},${d.sdRt},${d.accuracy},${d.errors},"${d.timestamp}"\n`;
             });
-
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `KHKT_Psych_Test_Data_${new Date().toISOString().slice(0,10)}.csv`;
-            document.body.appendChild(a);
+            a.download = `KHKT_PsychTest_Data_${new Date().toISOString().slice(0,10)}.csv`;
             a.click();
-            document.body.removeChild(a);
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadHistoryFromStorage();
-
-            // Nav buttons
-            document.getElementById('btnNavHome').addEventListener('click', () => showView('viewSetup'));
-            document.getElementById('btnNavGuide').addEventListener('click', () => showView('viewGuide'));
-            document.getElementById('btnNavHistory').addEventListener('click', () => {
-                renderHistoryTable();
-                showView('viewHistory');
-            });
-            document.getElementById('btnNavProposal').addEventListener('click', () => showView('viewProposal'));
-
-            // Volume Range Update
-            document.getElementById('inputVolume').addEventListener('input', (e) => {
-                document.getElementById('volumeValue').textContent = `${e.target.value}%`;
-                state.volume = parseFloat(e.target.value) / 100;
-                if (state.gainNode && state.audioCtx) {
-                    state.gainNode.gain.setValueAtTime(state.volume, state.audioCtx.currentTime);
-                }
-            });
-
-            // Audio Test Toggle
-            document.getElementById('btnTestSound').addEventListener('click', () => {
-                if (state.isTestingSound) {
-                    stopTone();
-                    state.isTestingSound = false;
-                    document.getElementById('txtTestSound').textContent = 'Bật Nghe Thử Âm Thanh';
-                } else {
-                    const selectedCond = document.querySelector('input[name="soundCondition"]:checked');
-                    const freq = parseInt(selectedCond ? selectedCond.value : '0');
-                    if (freq === 0) {
-                        alert("Điều kiện đối chứng (0 Hz) là môi trường im lặng.");
-                        return;
-                    }
-                    state.volume = parseFloat(document.getElementById('inputVolume').value) / 100;
-                    startTone(freq, state.volume);
-                    state.isTestingSound = true;
-                    document.getElementById('txtTestSound').textContent = 'Tắt Nghe Thử';
-                }
-            });
-
-            // Start Test Button
-            document.getElementById('btnStartTest').addEventListener('click', startReactionTest);
-
-            // User Reaction Handlers (Keyboard Spacebar & Click/Touch)
-            window.addEventListener('keydown', (e) => {
-                if (e.code === 'Space' && state.isTestRunning) {
-                    e.preventDefault();
-                    handleUserReaction();
-                }
-            });
-
-            document.getElementById('testArea').addEventListener('click', (e) => {
-                if (state.isTestRunning) {
-                    handleUserReaction();
-                }
-            });
-
-            document.getElementById('btnTouchAction').addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (state.isTestRunning) {
-                    handleUserReaction();
-                }
-            });
-
-            // Likert Scale Sliders
-            document.getElementById('rateFocus').addEventListener('input', (e) => {
-                state.surveyData.focus = parseInt(e.target.value);
-                document.getElementById('valFocus').textContent = `${e.target.value} / 10`;
-            });
-            document.getElementById('ratePleasant').addEventListener('input', (e) => {
-                state.surveyData.pleasant = parseInt(e.target.value);
-                document.getElementById('valPleasant').textContent = `${e.target.value} / 10`;
-            });
-            document.getElementById('rateFatigue').addEventListener('input', (e) => {
-                state.surveyData.fatigue = parseInt(e.target.value);
-                document.getElementById('valFatigue').textContent = `${e.target.value} / 10`;
-            });
-
-            // Submit Survey Button
-            document.getElementById('btnSubmitSurvey').addEventListener('click', () => {
-                renderResultsView();
-            });
-
-            // Results View Action Buttons
-            document.getElementById('btnSaveToHistory').addEventListener('click', saveCurrentToHistory);
-            document.getElementById('btnRestartTest').addEventListener('click', () => showView('viewSetup'));
-
-            // History Actions
-            document.getElementById('btnExportCSV').addEventListener('click', exportToCSV);
-            document.getElementById('btnClearHistory').addEventListener('click', () => {
-                if (confirm("Bạn có chắc chắn muốn XÓA TOÀN BỘ dữ liệu lịch sử?")) {
-                    state.history = [];
-                    localStorage.removeItem('psych_test_history');
-                    document.getElementById('historyCount').textContent = '0';
-                    renderHistoryTable();
-                }
-            });
-        });
-    </script>
-</body>
-</html>
-        });
+        function clearData() {
+            if(confirm("Bạn có chắc chắn muốn xóa toàn bộ dữ liệu thực nghiệm đã lưu?")) {
+                testData = [];
+                localStorage.removeItem('psych_test_data');
+                updateTable();
+            }
+        }
     </script>
 </body>
 </html>
