@@ -153,7 +153,7 @@
                         <i class="fa-solid fa-check-double"></i>
                     </div>
                     <h3 class="text-2xl font-bold">Hoàn Thành Toàn Bộ 4 Dải Tần!</h3>
-                    <p class="text-sm text-slate-400">Dữ liệu thử nghiệm ngẫu nhiên đã được ghi nhận tự động.</p>
+                    <p class="text-sm text-slate-400">Dữ liệu thử nghiệm ngẫu nhiên đã được ghi nhận tự động vào hệ thống.</p>
                 </div>
 
                 <div id="summary-cards" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -185,15 +185,15 @@
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-4">
                 <div class="flex justify-between items-center flex-wrap gap-4 border-b border-slate-700 pb-4">
                     <div>
-                        <h3 class="text-xl font-bold">Bảng Dữ Liệu Thực Nghiệm KHKT</h3>
-                        <p class="text-xs text-slate-400 mt-1">Lưu trữ toàn bộ kết quả của các dải tần ngẫu nhiên</p>
+                        <h3 class="text-xl font-bold">Bảng Dữ Liệu Thực Nghiệm Local</h3>
+                        <p class="text-xs text-slate-400 mt-1">Lưu trữ trên thiết bị hiện tại (Đồng thời tự động đồng bộ về Google Sheet)</p>
                     </div>
                     <div class="flex gap-2">
                         <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2">
                             <i class="fa-solid fa-file-excel"></i> Xuất CSV Báo Cáo
                         </button>
                         <button onclick="clearData()" class="bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 px-3 py-2 rounded-xl text-sm font-semibold transition">
-                            <i class="fa-solid fa-trash"></i> Xóa Dữ Liệu
+                            <i class="fa-solid fa-trash"></i> Xóa Dữ Liệu Local
                         </button>
                     </div>
                 </div>
@@ -241,12 +241,14 @@
 
     <!-- LOGIC JAVASCRIPT -->
     <script>
+        // WEB APP URL CỦA BẠN ĐÃ ĐƯỢC CẤU HÌNH Ở ĐÂY
+        const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbykLLrLqJlabOMGFWPUuvKikbE7wS8EfzyLSbiAmsKzwHoidacGkZAHoUXv74Ct2uY/exec";
+
         let testData = JSON.parse(localStorage.getItem('psych_test_data') || '[]');
         let audioCtx = null;
         let currentOsc = null;
         let currentGain = null;
 
-        // Định nghĩa 4 điều kiện âm thanh
         const AUDIO_CONDITIONS = [
             { id: 'control', name: 'Đối chứng (0 Hz)', freq: 0 },
             { id: 'low', name: 'Tần số Thấp (250 Hz)', freq: 250 },
@@ -300,7 +302,6 @@
             }
         }
 
-        // Hàm xáo trộn mảng ngẫu nhiên (Fisher-Yates Shuffle)
         function shuffleArray(array) {
             let arr = [...array];
             for (let i = arr.length - 1; i > 0; i--) {
@@ -326,8 +327,6 @@
             sessionConfig.subjectId = sid;
             sessionConfig.maxTrialsPerBlock = parseInt(document.getElementById('trial-count').value);
             sessionConfig.volume = parseFloat(document.getElementById('volume-range').value) / 100;
-            
-            // TẠO THỨ TỰ TẦN SỐ NGẪU NHIÊN CHO MỖI HỌC SINH
             sessionConfig.randomizedConditions = shuffleArray(AUDIO_CONDITIONS);
 
             sessionState.currentBlockIndex = 0;
@@ -434,9 +433,20 @@
                 timestamp: new Date().toLocaleString('vi-VN')
             };
 
+            // 1. Lưu tại local
             testData.push(record);
             sessionState.currentSessionResults.push(record);
             localStorage.setItem('psych_test_data', JSON.stringify(testData));
+
+            // 2. Tự động gửi về Google Sheet qua Web App
+            if (GOOGLE_SHEET_URL) {
+                fetch(GOOGLE_SHEET_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(record)
+                }).catch(err => console.error("Lỗi gửi dữ liệu về Google Sheet:", err));
+            }
 
             document.getElementById('test-area').classList.add('hidden');
 
@@ -532,7 +542,7 @@
         }
 
         function clearData() {
-            if(confirm("Bạn có chắc chắn muốn xóa toàn bộ dữ liệu thực nghiệm đã lưu?")) {
+            if(confirm("Bạn có chắc chắn muốn xóa toàn bộ dữ liệu thực nghiệm đã lưu tại máy này?")) {
                 testData = [];
                 localStorage.removeItem('psych_test_data');
                 updateTable();
