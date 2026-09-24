@@ -53,14 +53,17 @@
                     <i class="fa-solid fa-brain text-white text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-lg font-bold text-white tracking-wide leading-tight">PSYCH-TEST KHKT v0.1</h1>
+                    <h1 class="text-lg font-bold text-white tracking-wide leading-tight">PSYCH-TEST KHKT v0.2</h1>
                     <p class="text-xs text-slate-400">Nghiên cứu ảnh hưởng của tần số âm thanh đến nhận thức</p>
                 </div>
             </div>
             
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 flex-wrap">
                 <button id="btnNavHome" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-700 text-white hover:bg-slate-600 transition flex items-center gap-1.5">
                     <i class="fa-solid fa-play"></i> Bài Test
+                </button>
+                <button id="btnNavGuide" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center gap-1.5 border border-slate-700">
+                    <i class="fa-solid fa-circle-question"></i> Hướng Dẫn
                 </button>
                 <button id="btnNavHistory" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center gap-1.5 border border-slate-700">
                     <i class="fa-solid fa-database"></i> Dữ liệu (<span id="historyCount">0</span>)
@@ -178,7 +181,7 @@
                     <!-- Instruction Note -->
                     <div class="bg-indigo-950/40 border border-indigo-800/40 rounded-xl p-3 text-xs text-indigo-300/80 leading-relaxed">
                         <i class="fa-solid fa-circle-info mr-1 text-indigo-400"></i>
-                        <strong>Hướng dẫn:</strong> Bấm phím <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-600 rounded text-amber-300">Spacebar</kbd> hoặc nút **PHẢN ỨNG** ngay lập tức khi xuất hiện VÒNG TRÒN XANH LÁ trên màn hình. Hãy tập trung và không bấm trước khi tín hiệu xuất hiện!
+                        <strong>Hướng dẫn nhanh:</strong> Bấm phím <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-600 rounded text-amber-300">Spacebar</kbd> hoặc nút **PHẢN ỨNG** ngay lập tức khi xuất hiện VÒNG TRÒN XANH LÁ trên màn hình.
                     </div>
 
                     <!-- Start Button -->
@@ -391,7 +394,81 @@
             </div>
         </section>
 
-        <!-- VIEW 5: LOCAL HISTORY & CSV EXPORT -->
+        <!-- VIEW 5: USER GUIDE SECTION (MỚI BỔ SUNG) -->
+        <section id="viewGuide" class="hidden max-w-4xl mx-auto space-y-6">
+            <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-2xl space-y-6">
+                <div class="border-b border-slate-700 pb-4 flex items-center gap-3">
+                    <div class="p-3 bg-indigo-500/10 rounded-xl text-indigo-400 text-xl">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-white">Hướng Dẫn Sử Dụng Hệ Thống Thực Nghiệm</h2>
+                        <p class="text-xs text-slate-400">Quy trình các bước tiến hành thu thập dữ liệu phản ứng thị giác CPT</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Step 1 -->
+                    <div class="bg-slate-900/60 border border-slate-700/80 p-4 rounded-xl space-y-2">
+                        <div class="flex items-center gap-2 text-indigo-400 font-bold text-xs uppercase tracking-wider">
+                            <span class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-xs">1</span>
+                            Chuẩn bị thiết bị
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            • Đeo <strong>tai nghe stereo</strong> để đảm bảo khả năng cách âm và cảm nhận tần số rõ ràng.<br>
+                            • Điều chỉnh âm lượng thiết bị ở mức vừa phải (khoảng 30-50%).<br>
+                            • Ngồi ở không gian yên tĩnh, không bị làm phiền.
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="bg-slate-900/60 border border-slate-700/80 p-4 rounded-xl space-y-2">
+                        <div class="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider">
+                            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-xs">2</span>
+                            Thiết lập thông số
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            • Nhập <strong>Mã Học Sinh</strong> (ví dụ: HS01, HS02...).<br>
+                            • Chọn <strong>Điều kiện âm thanh</strong> được phân công (0 Hz, 250 Hz, 1000 Hz hoặc 4000 Hz).<br>
+                            • Nhấn nút <em>"Bật Nghe Thử Âm Thanh"</em> để kiểm tra trước.
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="bg-slate-900/60 border border-slate-700/80 p-4 rounded-xl space-y-2">
+                        <div class="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider">
+                            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center text-xs">3</span>
+                            Thực hiện Bài Test
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            • Nhấn <strong>"BẮT ĐẦU BÀI KIỂM TRA"</strong>.<br>
+                            • Đặt ngón tay lên phím <kbd class="px-1 bg-slate-800 border border-slate-600 rounded text-amber-300">Spacebar</kbd> (hoặc chuẩn bị chạm vào màn hình).<br>
+                            • Ngay khi xuất hiện <strong>Vòng tròn màu xanh lá</strong>, phản ứng bấm thật nhanh!
+                        </p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="bg-slate-900/60 border border-slate-700/80 p-4 rounded-xl space-y-2">
+                        <div class="flex items-center gap-2 text-purple-400 font-bold text-xs uppercase tracking-wider">
+                            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center text-xs">4</span>
+                            Lưu dữ liệu & Xuất CSV
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            • Sau khi kết thúc, hoàn thành bảng khảo sát mức độ mệt mỏi/tập trung.<br>
+                            • Nhấn <strong>"Lưu Vào Lịch Sử"</strong>.<br>
+                            • Vào tab <strong>Dữ liệu</strong> và nhấn <strong>"Xuất CSV Báo Cáo"</strong> để lấy file số liệu cho đề tài.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs text-amber-300 flex items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation text-base"></i>
+                    <span><strong>Lưu ý quan trọng:</strong> Tuyệt đối không nhấn phím trước khi tín hiệu xuất hiện! Mọi lượt nhấn sớm đều tính là Lỗi (Early Click).</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 6: LOCAL HISTORY & CSV EXPORT -->
         <section id="viewHistory" class="hidden max-w-5xl mx-auto space-y-6">
             <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-2xl space-y-4">
                 <div class="flex flex-wrap justify-between items-center gap-4">
@@ -436,11 +513,11 @@
             </div>
         </section>
 
-        <!-- VIEW 6: PROPOSAL DETAILS -->
+        <!-- VIEW 7: PROPOSAL DETAILS -->
         <section id="viewProposal" class="hidden max-w-4xl mx-auto space-y-6">
             <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 shadow-2xl space-y-4 text-xs leading-relaxed text-slate-300">
                 <div class="border-b border-slate-700 pb-4">
-                    <span class="px-2.5 py-1 bg-indigo-500/20 text-indigo-300 rounded-md text-[11px] font-semibold">KHKT RESEARCH PROPOSAL V0.1</span>
+                    <span class="px-2.5 py-1 bg-indigo-500/20 text-indigo-300 rounded-md text-[11px] font-semibold">KHKT RESEARCH PROPOSAL V0.2</span>
                     <h2 class="text-xl font-bold text-white mt-2">Nghiên cứu ảnh hưởng của các dải tần âm thanh đến khả năng duy trì tập trung và hiệu suất xử lý thông tin của học sinh THPT</h2>
                     <p class="text-slate-400 mt-1">Tác giả: <strong>Bùi Lê Quang Minh & Bùi Vũ Khánh Thư</strong></p>
                 </div>
@@ -566,7 +643,7 @@
         }
 
         function showView(viewId) {
-            ['viewSetup', 'viewTest', 'viewSurvey', 'viewResults', 'viewHistory', 'viewProposal'].forEach(id => {
+            ['viewSetup', 'viewTest', 'viewSurvey', 'viewResults', 'viewGuide', 'viewHistory', 'viewProposal'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.classList.add('hidden');
             });
@@ -575,6 +652,10 @@
 
             // Reset navigation active styles
             document.getElementById('btnNavHome').className = (viewId === 'viewSetup' || viewId === 'viewTest') ? 
+                'px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white transition flex items-center gap-1.5' : 
+                'px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center gap-1.5 border border-slate-700';
+
+            document.getElementById('btnNavGuide').className = (viewId === 'viewGuide') ? 
                 'px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white transition flex items-center gap-1.5' : 
                 'px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center gap-1.5 border border-slate-700';
             
@@ -951,6 +1032,7 @@
 
             // Nav buttons
             document.getElementById('btnNavHome').addEventListener('click', () => showView('viewSetup'));
+            document.getElementById('btnNavGuide').addEventListener('click', () => showView('viewGuide'));
             document.getElementById('btnNavHistory').addEventListener('click', () => {
                 renderHistoryTable();
                 showView('viewHistory');
@@ -1043,6 +1125,10 @@
                     renderHistoryTable();
                 }
             });
+        });
+    </script>
+</body>
+</html>
         });
     </script>
 </body>
