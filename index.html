@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PSYCH-TEST KHKT v0.2</title>
+    <title>PSYCH-TEST KHKT v0.3</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -20,7 +20,7 @@
                     <i class="fa-solid fa-brain text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg leading-none">PSYCH-TEST KHKT v0.2</h1>
+                    <h1 class="font-bold text-lg leading-none">PSYCH-TEST KHKT v0.3</h1>
                     <p class="text-xs text-slate-400 mt-1">Nghiên cứu ảnh hưởng của tần số âm thanh đến nhận thức</p>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     </div>
                     <div>
                         <h2 class="text-xl font-bold mb-1">Khảo sát & Kiểm tra Thực nghiệm</h2>
-                        <p class="text-sm text-slate-400">Bài thử nghiệm đo thời gian phản ứng thị giác (CPT - Continuous Performance Task). Vui lòng đeo tai nghe, chọn đúng điều kiện âm thanh được phân công và giữ tập trung trong suốt quá trình làm bài.</p>
+                        <p class="text-sm text-slate-400">Bài thử nghiệm đo thời gian phản ứng thị giác (CPT). Bạn sẽ lần lượt trải qua <strong>4 dải tần số âm thanh ngẫu nhiên</strong>. Vui lòng đeo tai nghe và giữ tập trung cao độ.</p>
                     </div>
                 </div>
             </div>
@@ -73,77 +73,36 @@
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium mb-2 text-slate-300">Điều Kiện Âm Thanh (Audio Condition) <span class="text-rose-500">*</span></label>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <label class="cursor-pointer border border-slate-700 bg-slate-900/50 hover:border-slate-500 rounded-xl p-4 flex items-start gap-3 transition">
-                            <input type="radio" name="audio_cond" value="control" checked class="mt-1 text-indigo-600 focus:ring-0">
-                            <div>
-                                <p class="font-medium text-sm">Đối chứng (Control)</p>
-                                <p class="text-xs text-slate-400">Không phát âm thanh (0 Hz)</p>
-                            </div>
-                        </label>
-                        <label class="cursor-pointer border border-slate-700 bg-slate-900/50 hover:border-slate-500 rounded-xl p-4 flex items-start gap-3 transition">
-                            <input type="radio" name="audio_cond" value="low" class="mt-1 text-indigo-600 focus:ring-0">
-                            <div>
-                                <p class="font-medium text-sm text-emerald-400">Dải Tần Thấp</p>
-                                <p class="text-xs text-slate-400">Tần số 250 Hz (Sine wave)</p>
-                            </div>
-                        </label>
-                        <label class="cursor-pointer border border-slate-700 bg-slate-900/50 hover:border-slate-500 rounded-xl p-4 flex items-start gap-3 transition">
-                            <input type="radio" name="audio_cond" value="mid" class="mt-1 text-indigo-600 focus:ring-0">
-                            <div>
-                                <p class="font-medium text-sm text-amber-400">Dải Tần Trung</p>
-                                <p class="text-xs text-slate-400">Tần số 1,000 Hz (Sine wave)</p>
-                            </div>
-                        </label>
-                        <label class="cursor-pointer border border-slate-700 bg-slate-900/50 hover:border-slate-500 rounded-xl p-4 flex items-start gap-3 transition">
-                            <input type="radio" name="audio_cond" value="high" class="mt-1 text-indigo-600 focus:ring-0">
-                            <div>
-                                <p class="font-medium text-sm text-purple-400">Dải Tần Cao</p>
-                                <p class="text-xs text-slate-400">Tần số 4,000 Hz (Sine wave)</p>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Số lượt thử nghiệm (Trials)</label>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Số lượt thử nghiệm mỗi dải tần</label>
                         <select id="trial-count" class="w-full bg-slate-900 border border-slate-700 rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-slate-100">
-                            <option value="15">15 Lượt (Khuyến nghị chuẩn)</option>
-                            <option value="10">10 Lượt (Thử nhanh)</option>
-                            <option value="20">20 Lượt (Độ chính xác cao)</option>
+                            <option value="10">10 Lượt / Tần số (Thực nghiệm tiêu chuẩn)</option>
+                            <option value="15">15 Lượt / Tần số (Độ chính xác cao)</option>
+                            <option value="5">5 Lượt / Tần số (Thử nhanh)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Thử Âm Thanh Trước Làm Bài</label>
-                        <button type="button" onclick="testAudio()" class="w-full bg-slate-700 hover:bg-slate-600 text-slate-200 py-3 rounded-xl font-medium transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-volume-high"></i> Bật Nghe Thử Âm Thanh
-                        </button>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Cường độ âm thanh (Volume)</label>
+                        <div class="flex items-center gap-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5">
+                            <input type="range" id="volume-range" min="5" max="100" value="30" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500" oninput="document.getElementById('vol-val').innerText = this.value + '%'">
+                            <span id="vol-val" class="text-xs font-bold text-slate-300 w-10 text-right">30%</span>
+                        </div>
                     </div>
-                </div>
-
-                <div>
-                    <div class="flex justify-between text-sm mb-1">
-                        <span class="text-slate-300">Cường độ âm thanh (Volume)</span>
-                        <span id="vol-val" class="text-slate-400">30%</span>
-                    </div>
-                    <input type="range" id="volume-range" min="5" max="100" value="30" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500" oninput="document.getElementById('vol-val').innerText = this.value + '%'">
                 </div>
 
                 <div class="p-4 bg-slate-900/60 border border-slate-700/80 rounded-xl text-xs text-slate-300 space-y-1">
-                    <p><i class="fa-solid fa-circle-info text-indigo-400 mr-1"></i> <strong>Hướng dẫn nhanh:</strong> Bấm phím <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-600 rounded text-amber-300">Spacebar</kbd> hoặc nút **PHẢN ỨNG** ngay lập tức khi xuất hiện VÒNG TRÒN XANH LÁ trên màn hình.</p>
+                    <p><i class="fa-solid fa-shuffle text-indigo-400 mr-1"></i> <strong>Quy trình thực nghiệm:</strong> Máy sẽ tự động xáo trộn ngẫu nhiên 4 điều kiện âm thanh: <em>Đối chứng (0Hz), Tần số thấp (250Hz), Trung (1000Hz), Cao (4000Hz)</em>.</p>
                 </div>
 
-                <!-- BỔ SUNG: MỤC ĐIỀU KHOẢN & BẢO MẬT -->
+                <!-- MỤC ĐIỀU KHOẢN & BẢO MẬT -->
                 <div class="border-t border-slate-700/80 pt-5 mt-4 space-y-3">
                     <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
                         <i class="fa-solid fa-shield-halved text-emerald-400"></i> Điều khoản tự nguyện & Bảo mật dữ liệu
                     </h4>
                     <div class="bg-slate-900/80 border border-slate-700/60 rounded-xl p-3.5 text-xs text-slate-400 space-y-1.5 leading-relaxed">
                         <p>• <strong>Mục đích:</strong> Phục vụ đề tài Nghiên cứu Khoa học Kỹ thuật dành cho học sinh THPT.</p>
-                        <p>• <strong>Bảo mật:</strong> Mọi dữ liệu thu thập (thời gian phản ứng, tỷ lệ chính xác) hoàn toàn ẩn danh thông qua Mã Mã Học Sinh, không thu thập thông tin định danh cá nhân.</p>
+                        <p>• <strong>Bảo mật:</strong> Mọi dữ liệu thu thập (thời gian phản ứng, tỷ lệ chính xác) hoàn toàn ẩn danh thông qua Mã Học Sinh, không thu thập thông tin định danh cá nhân.</p>
                         <p>• <strong>Quyền lợi:</strong> Học sinh có quyền dừng thực nghiệm bất cứ lúc nào nếu cảm thấy mệt mỏi hoặc khó chịu với âm thanh.</p>
                     </div>
                     <label class="flex items-center gap-3 cursor-pointer pt-1">
@@ -152,16 +111,17 @@
                     </label>
                 </div>
 
-                <button onclick="startTest()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-lg">
-                    <i class="fa-solid fa-play"></i> BẮT ĐẦU BÀI KIỂM TRA
+                <button onclick="startFullTestSession()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-lg">
+                    <i class="fa-solid fa-play"></i> BẮT ĐẦU CHUỖI THỰC NGHIỆM
                 </button>
             </div>
 
-            <!-- KHU VỰC THỰC NGHIỆM (ẢN BAN ĐẦU) -->
+            <!-- KHU VỰC THỰC NGHIỆM -->
             <div id="test-area" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center space-y-6">
                 <div class="flex justify-between items-center text-sm text-slate-400 border-b border-slate-700 pb-4">
-                    <span>Lượt thực nghiệm: <strong id="current-trial" class="text-white">0</strong> / <span id="total-trials">15</span></span>
-                    <span>Tần số: <strong id="active-cond-name" class="text-indigo-400">---</strong></span>
+                    <span>Vòng: <strong id="current-block" class="text-indigo-400">1 / 4</strong></span>
+                    <span>Lượt: <strong id="current-trial" class="text-white">0</strong> / <span id="total-trials">10</span></span>
+                    <span>Tần số hiện tại: <strong id="active-cond-name" class="text-amber-400">---</strong></span>
                 </div>
 
                 <div id="stimulus-box" class="h-64 bg-slate-900 border-2 border-dashed border-slate-700 rounded-2xl flex items-center justify-center relative overflow-hidden transition-all duration-100">
@@ -174,37 +134,34 @@
                 </button>
             </div>
 
-            <!-- KẾT QUẢ CÁ NHÂN -->
+            <!-- MÀN HÌNH NGHỈ GIỮA CÁC VÒNG -->
+            <div id="break-panel" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center space-y-6">
+                <div class="w-16 h-16 bg-amber-500/10 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl">
+                    <i class="fa-solid fa-mug-hot"></i>
+                </div>
+                <h3 class="text-2xl font-bold">Nghỉ Giải Lao 10 Giây</h3>
+                <p class="text-sm text-slate-400">Bạn đã hoàn thành Vòng <span id="completed-block-num">1</span>/4. Hãy thả lỏng mắt và chuẩn bị cho dải tần số tiếp theo.</p>
+                <button onclick="startNextBlock()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-8 py-3 rounded-xl transition">
+                    Sẵn Sàng Sang Vòng Tiếp Theo
+                </button>
+            </div>
+
+            <!-- KẾT QUẢ CÁ NHÂN TỔNG HỢP -->
             <div id="result-panel" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-6">
                 <div class="text-center space-y-2">
                     <div class="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-2xl">
-                        <i class="fa-solid fa-check"></i>
+                        <i class="fa-solid fa-check-double"></i>
                     </div>
-                    <h3 class="text-2xl font-bold">Hoàn Thành Thử Nghiệm!</h3>
-                    <p class="text-sm text-slate-400">Dữ liệu đã được ghi nhận tự động vào hệ thống.</p>
+                    <h3 class="text-2xl font-bold">Hoàn Thành Toàn Bộ 4 Dải Tần!</h3>
+                    <p class="text-sm text-slate-400">Dữ liệu thử nghiệm ngẫu nhiên đã được ghi nhận tự động.</p>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-slate-900 p-4 rounded-xl text-center">
-                        <p class="text-xs text-slate-400 mb-1">Thời gian TB (Mean RT)</p>
-                        <p id="res-mean-rt" class="text-xl font-bold text-indigo-400">0 ms</p>
-                    </div>
-                    <div class="bg-slate-900 p-4 rounded-xl text-center">
-                        <p class="text-xs text-slate-400 mb-1">Độ lệch chuẩn (SD)</p>
-                        <p id="res-sd-rt" class="text-xl font-bold text-slate-200">0 ms</p>
-                    </div>
-                    <div class="bg-slate-900 p-4 rounded-xl text-center">
-                        <p class="text-xs text-slate-400 mb-1">Chính xác (Accuracy)</p>
-                        <p id="res-acc" class="text-xl font-bold text-emerald-400">0%</p>
-                    </div>
-                    <div class="bg-slate-900 p-4 rounded-xl text-center">
-                        <p class="text-xs text-slate-400 mb-1">Số lỗi bấm sớm</p>
-                        <p id="res-errors" class="text-xl font-bold text-rose-400">0</p>
-                    </div>
+                <div id="summary-cards" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- JS sẽ render kết quả 4 dải tần ở đây -->
                 </div>
 
                 <button onclick="resetTest()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-xl transition">
-                    Làm Bài Thử Nghiệm Khác
+                    Thực Hiện Cho Học Sinh Khác
                 </button>
             </div>
         </section>
@@ -213,13 +170,12 @@
         <section id="tab-guide" class="hidden space-y-6">
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-4">
                 <h3 class="text-xl font-bold text-indigo-400 border-b border-slate-700 pb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-book-open"></i> Hướng Dẫn Dành Cho Học Sinh Thực Nghiệm
+                    <i class="fa-solid fa-book-open"></i> Hướng Dẫn Dành Cho Học Sinh
                 </h3>
                 <ol class="list-decimal list-inside space-y-3 text-slate-300 text-sm leading-relaxed">
-                    <li><strong class="text-white">Chuẩn bị tai nghe:</strong> Đeo tai nghe có dây hoặc không dây, đảm bảo âm thanh phát đều 2 bên.</li>
-                    <li><strong class="text-white">Nhập Mã Học Sinh:</strong> Điền chính xác Mã do nhóm nghiên cứu cấp (VD: HS01).</li>
-                    <li><strong class="text-white">Thực hiện bài test:</strong> Nhìn vào khung thử nghiệm. Khi thấy <span class="text-emerald-400 font-bold">VÒNG TRÒN XANH LÁ</span> xuất hiện, bấm phím <kbd class="px-2 py-0.5 bg-slate-700 border border-slate-600 rounded text-amber-300">Spacebar</kbd> thật nhanh.</li>
-                    <li><strong class="text-white">Lưu ý:</strong> Không bấm trước khi vòng tròn xuất hiện (sẽ bị tính lỗi bấm sớm). Giữ tập trung tối đa trong suốt 15 lượt.</li>
+                    <li><strong class="text-white">Chuẩn bị:</strong> Đeo tai nghe, điền Mã Học Sinh và tích chọn Đồng ý điều khoản.</li>
+                    <li><strong class="text-white">Thực nghiệm 4 Vòng:</strong> Bạn sẽ đi qua 4 dải tần âm thanh ngẫu nhiên. Sau mỗi vòng sẽ có màn hình nghỉ giải lao.</li>
+                    <li><strong class="text-white">Thao tác:</strong> Bấm phím <kbd class="px-2 py-0.5 bg-slate-700 border border-slate-600 rounded text-amber-300">Spacebar</kbd> ngay khi thấy VÒNG TRÒN XANH LÁ xuất hiện.</li>
                 </ol>
             </div>
         </section>
@@ -229,15 +185,15 @@
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-4">
                 <div class="flex justify-between items-center flex-wrap gap-4 border-b border-slate-700 pb-4">
                     <div>
-                        <h3 class="text-xl font-bold">Bảng Dữ Liệu Thực Nghiệm</h3>
-                        <p class="text-xs text-slate-400 mt-1">Dữ liệu lưu trữ trực tiếp trên LocalStorage của trình duyệt</p>
+                        <h3 class="text-xl font-bold">Bảng Dữ Liệu Thực Nghiệm KHKT</h3>
+                        <p class="text-xs text-slate-400 mt-1">Lưu trữ toàn bộ kết quả của các dải tần ngẫu nhiên</p>
                     </div>
                     <div class="flex gap-2">
                         <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2">
                             <i class="fa-solid fa-file-excel"></i> Xuất CSV Báo Cáo
                         </button>
                         <button onclick="clearData()" class="bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 px-3 py-2 rounded-xl text-sm font-semibold transition">
-                            <i class="fa-solid fa-trash"></i> Xóa
+                            <i class="fa-solid fa-trash"></i> Xóa Dữ Liệu
                         </button>
                     </div>
                 </div>
@@ -247,7 +203,7 @@
                         <thead class="bg-slate-900/60 text-slate-400 text-xs uppercase">
                             <tr>
                                 <th class="p-3">Mã HS</th>
-                                <th class="p-3">Điều kiện</th>
+                                <th class="p-3">Điều kiện âm thanh</th>
                                 <th class="p-3">Mean RT (ms)</th>
                                 <th class="p-3">SD (ms)</th>
                                 <th class="p-3">Độ chính xác</th>
@@ -256,7 +212,6 @@
                             </tr>
                         </thead>
                         <tbody id="data-table-body" class="divide-y divide-slate-700/50">
-                            <!-- JS Render dữ liệu ở đây -->
                         </tbody>
                     </table>
                 </div>
@@ -272,7 +227,7 @@
                 <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
                     <p><strong>Tên đề tài:</strong> Nghiên cứu ảnh hưởng của các dải tần số âm thanh đến thời gian phản ứng và khả năng duy trì sự tập trung của học sinh THPT.</p>
                     <p><strong>Học sinh thực hiện:</strong> Bùi Lê Quang Minh & Bùi Vũ Khánh Thư</p>
-                    <p><strong>Giả thuyết $H_1$:</strong> Sự hiện diện của âm thanh tần số thấp (250 Hz) có khả năng làm giảm thời gian phản ứng thị giác (Mean RT) và tăng độ ổn định tập trung so với điều kiện đối chứng.</p>
+                    <p><strong>Thiết kế thực nghiệm:</strong> Within-subjects design (Mỗi đối tượng thử nghiệm trải qua cả 4 điều kiện âm thanh với thứ tự ngẫu nhiên hóa để triệt tiêu hiệu ứng thứ tự/mệt mỏi).</p>
                 </div>
             </div>
         </section>
@@ -290,9 +245,17 @@
         let audioCtx = null;
         let currentOsc = null;
         let currentGain = null;
-        
-        let trialConfig = { subjectId: '', condition: 'control', maxTrials: 15, volume: 0.3 };
-        let state = { activeTrial: 0, reactionTimes: [], earlyErrors: 0, startTime: 0, waitingForStimulus: false, timeoutId: null };
+
+        // Định nghĩa 4 điều kiện âm thanh
+        const AUDIO_CONDITIONS = [
+            { id: 'control', name: 'Đối chứng (0 Hz)', freq: 0 },
+            { id: 'low', name: 'Tần số Thấp (250 Hz)', freq: 250 },
+            { id: 'mid', name: 'Tần số Trung (1,000 Hz)', freq: 1000 },
+            { id: 'high', name: 'Tần số Cao (4,000 Hz)', freq: 4000 }
+        ];
+
+        let sessionConfig = { subjectId: '', maxTrialsPerBlock: 10, volume: 0.3, randomizedConditions: [] };
+        let sessionState = { currentBlockIndex: 0, activeTrial: 0, reactionTimes: [], earlyErrors: 0, startTime: 0, waitingForStimulus: false, timeoutId: null, currentSessionResults: [] };
 
         document.addEventListener('DOMContentLoaded', updateTable);
 
@@ -337,70 +300,70 @@
             }
         }
 
-        function testAudio() {
-            initAudio();
-            const cond = document.querySelector('input[name="audio_cond"]:checked').value;
-            const vol = parseFloat(document.getElementById('volume-range').value) / 100;
-            let freq = 0;
-            if(cond === 'low') freq = 250;
-            else if(cond === 'mid') freq = 1000;
-            else if(cond === 'high') freq = 4000;
-
-            if(freq === 0) {
-                alert("Điều kiện Đối chứng không có âm thanh (0 Hz).");
-                return;
+        // Hàm xáo trộn mảng ngẫu nhiên (Fisher-Yates Shuffle)
+        function shuffleArray(array) {
+            let arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
             }
-            playTone(freq, vol);
-            setTimeout(stopTone, 1500);
+            return arr;
         }
 
-        function startTest() {
+        function startFullTestSession() {
             const sid = document.getElementById('subject-id').value.trim();
             if (!sid) {
                 alert('Vui lòng nhập Mã Học Sinh (Subject ID) trước khi bắt đầu!');
                 return;
             }
 
-            // KIỂM TRA ĐIỀU KHOẢN TỰ NGUYỆN
             const consent = document.getElementById('consent-check').checked;
             if(!consent) {
                 alert('Vui lòng tích chọn đồng ý với Điều khoản tự nguyện & Bảo mật dữ liệu!');
                 return;
             }
 
-            trialConfig.subjectId = sid;
-            trialConfig.condition = document.querySelector('input[name="audio_cond"]:checked').value;
-            trialConfig.maxTrials = parseInt(document.getElementById('trial-count').value);
-            trialConfig.volume = parseFloat(document.getElementById('volume-range').value) / 100;
+            sessionConfig.subjectId = sid;
+            sessionConfig.maxTrialsPerBlock = parseInt(document.getElementById('trial-count').value);
+            sessionConfig.volume = parseFloat(document.getElementById('volume-range').value) / 100;
+            
+            // TẠO THỨ TỰ TẦN SỐ NGẪU NHIÊN CHO MỖI HỌC SINH
+            sessionConfig.randomizedConditions = shuffleArray(AUDIO_CONDITIONS);
+
+            sessionState.currentBlockIndex = 0;
+            sessionState.currentSessionResults = [];
 
             document.getElementById('setup-panel').classList.add('hidden');
-            document.getElementById('test-area').classList.remove('hidden');
-            document.getElementById('total-trials').innerText = trialConfig.maxTrials;
+            startBlock();
+        }
+
+        function startBlock() {
+            const currentCond = sessionConfig.randomizedConditions[sessionState.currentBlockIndex];
             
-            let condLabel = "Đối chứng (0 Hz)";
-            let freq = 0;
-            if(trialConfig.condition === 'low') { condLabel = "250 Hz (Thấp)"; freq = 250; }
-            if(trialConfig.condition === 'mid') { condLabel = "1000 Hz (Trung)"; freq = 1000; }
-            if(trialConfig.condition === 'high') { condLabel = "4000 Hz (Cao)"; freq = 4000; }
-            document.getElementById('active-cond-name').innerText = condLabel;
+            document.getElementById('test-area').classList.remove('hidden');
+            document.getElementById('break-panel').classList.add('hidden');
 
-            if(freq > 0) playTone(freq, trialConfig.volume);
+            document.getElementById('current-block').innerText = `${sessionState.currentBlockIndex + 1} / 4`;
+            document.getElementById('total-trials').innerText = sessionConfig.maxTrialsPerBlock;
+            document.getElementById('active-cond-name').innerText = currentCond.name;
 
-            state.activeTrial = 0;
-            state.reactionTimes = [];
-            state.earlyErrors = 0;
+            if(currentCond.freq > 0) playTone(currentCond.freq, sessionConfig.volume);
+
+            sessionState.activeTrial = 0;
+            sessionState.reactionTimes = [];
+            sessionState.earlyErrors = 0;
 
             nextTrial();
         }
 
         function nextTrial() {
-            if (state.activeTrial >= trialConfig.maxTrials) {
-                finishTest();
+            if (sessionState.activeTrial >= sessionConfig.maxTrialsPerBlock) {
+                finishBlock();
                 return;
             }
 
-            state.activeTrial++;
-            document.getElementById('current-trial').innerText = state.activeTrial;
+            sessionState.activeTrial++;
+            document.getElementById('current-trial').innerText = sessionState.activeTrial;
             
             const box = document.getElementById('stimulus-box');
             const circle = document.getElementById('target-circle');
@@ -408,35 +371,35 @@
 
             circle.classList.add('hidden');
             text.classList.remove('hidden');
-            text.innerText = "Chờ tín hiệu...";
+            text.innerText = "Chuẩn bị...";
             box.classList.remove('border-emerald-500', 'bg-emerald-950/20');
 
-            state.waitingForStimulus = true;
+            sessionState.waitingForStimulus = true;
 
             const delay = Math.floor(Math.random() * 2500) + 1500;
-            state.timeoutId = setTimeout(() => {
-                state.waitingForStimulus = false;
+            sessionState.timeoutId = setTimeout(() => {
+                sessionState.waitingForStimulus = false;
                 text.classList.add('hidden');
                 circle.classList.remove('hidden');
                 box.classList.add('border-emerald-500', 'bg-emerald-950/20');
-                state.startTime = performance.now();
+                sessionState.startTime = performance.now();
             }, delay);
         }
 
         function handleReaction() {
-            if (state.waitingForStimulus) {
-                clearTimeout(state.timeoutId);
-                state.earlyErrors++;
+            if (sessionState.waitingForStimulus) {
+                clearTimeout(sessionState.timeoutId);
+                sessionState.earlyErrors++;
                 document.getElementById('stimulus-text').innerText = "BẤM SỚM! Bỏ qua lượt này...";
-                state.waitingForStimulus = false;
+                sessionState.waitingForStimulus = false;
                 setTimeout(nextTrial, 1200);
                 return;
             }
 
-            if (state.startTime > 0) {
-                const rt = Math.round(performance.now() - state.startTime);
-                state.reactionTimes.push(rt);
-                state.startTime = 0;
+            if (sessionState.startTime > 0) {
+                const rt = Math.round(performance.now() - sessionState.startTime);
+                sessionState.reactionTimes.push(rt);
+                sessionState.startTime = 0;
                 nextTrial();
             }
         }
@@ -448,12 +411,10 @@
             }
         });
 
-        function finishTest() {
+        function finishBlock() {
             stopTone();
-            document.getElementById('test-area').classList.add('hidden');
-            document.getElementById('result-panel').classList.remove('hidden');
-
-            const rts = state.reactionTimes;
+            const currentCond = sessionConfig.randomizedConditions[sessionState.currentBlockIndex];
+            const rts = sessionState.reactionTimes;
             const mean = rts.length ? Math.round(rts.reduce((a, b) => a + b, 0) / rts.length) : 0;
             
             let variance = 0;
@@ -461,32 +422,75 @@
                 variance = rts.reduce((sq, n) => sq + Math.pow(n - mean, 2), 0) / (rts.length - 1);
             }
             const sd = Math.round(Math.sqrt(variance));
-
-            const accuracy = Math.round((rts.length / trialConfig.maxTrials) * 100);
-
-            document.getElementById('res-mean-rt').innerText = mean + ' ms';
-            document.getElementById('res-sd-rt').innerText = sd + ' ms';
-            document.getElementById('res-acc').innerText = accuracy + '%';
-            document.getElementById('res-errors').innerText = state.earlyErrors;
+            const accuracy = Math.round((rts.length / sessionConfig.maxTrialsPerBlock) * 100);
 
             const record = {
-                id: trialConfig.subjectId,
-                condition: trialConfig.condition,
+                id: sessionConfig.subjectId,
+                condition: currentCond.name,
                 meanRt: mean,
                 sdRt: sd,
                 accuracy: accuracy,
-                errors: state.earlyErrors,
+                errors: sessionState.earlyErrors,
                 timestamp: new Date().toLocaleString('vi-VN')
             };
 
             testData.push(record);
+            sessionState.currentSessionResults.push(record);
             localStorage.setItem('psych_test_data', JSON.stringify(testData));
+
+            document.getElementById('test-area').classList.add('hidden');
+
+            if (sessionState.currentBlockIndex < 3) {
+                document.getElementById('completed-block-num').innerText = sessionState.currentBlockIndex + 1;
+                document.getElementById('break-panel').classList.remove('hidden');
+            } else {
+                finishFullSession();
+            }
+        }
+
+        function startNextBlock() {
+            sessionState.currentBlockIndex++;
+            startBlock();
+        }
+
+        function finishFullSession() {
+            document.getElementById('result-panel').classList.remove('hidden');
+            const cardsContainer = document.getElementById('summary-cards');
+            cardsContainer.innerHTML = '';
+
+            sessionState.currentSessionResults.forEach((res, idx) => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 border border-slate-700/80 rounded-xl p-4 space-y-2";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center text-xs text-slate-400 border-b border-slate-800 pb-2">
+                        <span class="font-bold text-indigo-400">Vòng ${idx + 1}</span>
+                        <span>${res.condition}</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center pt-1">
+                        <div>
+                            <p class="text-[10px] text-slate-500">Mean RT</p>
+                            <p class="font-bold text-slate-200 text-sm">${res.meanRt} ms</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-slate-500">SD</p>
+                            <p class="font-bold text-slate-300 text-sm">${res.sdRt} ms</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-slate-500">Lỗi bấm sớm</p>
+                            <p class="font-bold text-rose-400 text-sm">${res.errors}</p>
+                        </div>
+                    </div>
+                `;
+                cardsContainer.appendChild(card);
+            });
+
             updateTable();
         }
 
         function resetTest() {
             document.getElementById('result-panel').classList.add('hidden');
             document.getElementById('setup-panel').classList.remove('hidden');
+            document.getElementById('subject-id').value = '';
         }
 
         function updateTable() {
