@@ -96,7 +96,7 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                         <div>
-                            <label class="block text-xs text-slate-400 mb-1">Mức độ MỆT MỎI hiện tại (1: Rất tỉnh táo $\rightarrow$ 5: Rất mệt mỏi):</label>
+                            <label class="block text-xs text-slate-400 mb-1">Mức độ MỆT MỎI hiện tại (1: Rất tỉnh táo &rarr; 5: Rất mệt mỏi):</label>
                             <select id="pre-fatigue" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200 text-xs">
                                 <option value="1">1 - Cực kỳ tỉnh táo, tràn đầy năng lượng</option>
                                 <option value="2">2 - Bình thường, hơi tỉnh táo</option>
@@ -106,7 +106,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-400 mb-1">Mức độ CĂNG THẲNG / STRESS (1: Cực kỳ thư giãn $\rightarrow$ 5: Rất căng thẳng):</label>
+                            <label class="block text-xs text-slate-400 mb-1">Mức độ CĂNG THẲNG / STRESS (1: Cực kỳ thư giãn &rarr; 5: Rất căng thẳng):</label>
                             <select id="pre-stress" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200 text-xs">
                                 <option value="1">1 - Thoải mái, không căng thẳng</option>
                                 <option value="2">2 - Hơi thoải mái</option>
@@ -118,23 +118,23 @@
                     </div>
                 </div>
 
-               <!-- KHUNG ĐIỀU KHOẢN & CAM KẾT PARTICIPANT CONSENT -->
-<div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 12px; margin-bottom: 12px; max-height: 120px; overflow-y: auto; font-size: 0.85rem; color: #cbd5e1;">
-  <h4 style="color: #60a5fa; margin-bottom: 6px; font-size: 0.9rem;">ĐIỀU KHOẢN & CAM KẾT THAM GIA THỬ NGHIỆM:</h4>
-  <p>1. <b>Tính Tự Nguyện:</b> Bằng việc tham gia, bạn xác nhận tự nguyện đóng góp dữ liệu cho đề tài nghiên cứu KHKT.</p>
-  <p>2. <b>Bảo Mật Dữ Liệu:</b> Mã học sinh (Subject ID) được sử dụng để ẩn danh hóa hoàn toàn. Dữ liệu chỉ phục vụ mục đích phân tích thống kê khoa học.</p>
-  <p>3. <b>An Toàn Âm Thanh:</b> Âm thanh thử nghiệm được giới hạn ở mức âm lượng an toàn. Bạn có thể dừng bài thử nghiệm bất kỳ lúc nào nếu cảm thấy khó chịu.</p>
-</div>
+                <!-- KHUNG ĐIỀU KHOẢN & CAM KẾT PARTICIPANT CONSENT -->
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 12px; margin-bottom: 12px; max-height: 120px; overflow-y: auto; font-size: 0.85rem; color: #cbd5e1;">
+                  <h4 style="color: #60a5fa; margin-bottom: 6px; font-size: 0.9rem;">ĐIỀU KHOẢN & CAM KẾT THAM GIA THỬ NGHIỆM:</h4>
+                  <p>1. <b>Tính Tự Nguyện:</b> Bằng việc tham gia, bạn xác nhận tự nguyện đóng góp dữ liệu cho đề tài nghiên cứu KHKT.</p>
+                  <p>2. <b>Bảo Mật Dữ Liệu:</b> Mã học sinh (Subject ID) được sử dụng để ẩn danh hóa hoàn toàn. Dữ liệu chỉ phục vụ mục đích phân tích thống kê khoa học.</p>
+                  <p>3. <b>An Toàn Âm Thanh:</b> Âm thanh thử nghiệm được giới hạn ở mức âm lượng an toàn. Bạn có thể dừng bài thử nghiệm bất kỳ lúc nào nếu cảm thấy khó chịu.</p>
+                </div>
+                
                 <label class="flex items-center gap-3 text-sm text-slate-300 cursor-pointer">
-    <input type="checkbox" id="consent-check"
-        class="w-4 h-4 accent-indigo-500">
-    <span>Tôi đã đọc và đồng ý tham gia thử nghiệm.</span>
-</label>
+                    <input type="checkbox" id="consent-check" class="w-4 h-4 accent-indigo-500">
+                    <span>Tôi đã đọc và đồng ý tham gia thử nghiệm.</span>
+                </label>
 
-<button onclick="startFullTestSession()"
-    class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl">
-    BẮT ĐẦU THỬ NGHIỆM
-</button>
+                <button onclick="startFullTestSession()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl transition">
+                    BẮT ĐẦU THỬ NGHIỆM
+                </button>
+            </div>
 
             <!-- KHU VỰC THỰC NGHIỆM (CPT TEST) -->
             <div id="test-area" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center space-y-6">
@@ -276,30 +276,31 @@
             </div>
         </section>
 
-       <div id="tab-project" class="tab-content hidden">
-  <div style="background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 24px; max-width: 800px; margin: 0 auto; color: #e2e8f0;">
-    <h2 style="color: #818cf8; font-size: 1.4rem; margin-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
-      🎓 Đề Tài Nghiên Cứu Khoa Học Kỹ Thuật
-    </h2>
-    
-    <div style="margin-bottom: 16px;">
-      <p style="margin-bottom: 6px;"><strong style="color: #93c5fd;">Tên đề tài:</strong> Nghiên cứu ảnh hưởng của các dải tần số âm thanh đến thời gian phản ứng và khả năng duy trì sự tập trung của học sinh THPT.</p>
-      <p style="margin-bottom: 6px;"><strong style="color: #93c5fd;">Học sinh thực hiện:</strong> Bùi Lê Quang Minh & Bùi Vũ Khánh Thư</p>
-    </div>
+        <!-- TAB 4: THÔNG TIN ĐỀ TÀI -->
+        <section id="tab-project" class="hidden">
+            <div style="background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 24px; max-width: 800px; margin: 0 auto; color: #e2e8f0;">
+                <h2 style="color: #818cf8; font-size: 1.4rem; margin-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
+                  🎓 Đề Tài Nghiên Cứu Khoa Học Kỹ Thuật
+                </h2>
+                
+                <div style="margin-bottom: 16px;">
+                  <p style="margin-bottom: 6px;"><strong style="color: #93c5fd;">Tên đề tài:</strong> Nghiên cứu ảnh hưởng của các dải tần số âm thanh đến thời gian phản ứng và khả năng duy trì sự tập trung của học sinh THPT.</p>
+                  <p style="margin-bottom: 6px;"><strong style="color: #93c5fd;">Học sinh thực hiện:</strong> Bùi Lê Quang Minh & Bùi Vũ Khánh Thư</p>
+                </div>
 
-    <div style="background: rgba(15, 23, 42, 0.5); padding: 14px; border-radius: 8px; font-size: 0.9rem; line-height: 1.6; color: #cbd5e1;">
-      <h3 style="color: #f3f4f6; font-size: 1rem; margin-bottom: 8px;">📌 Mô tả tổng quan & Mục tiêu nghiên cứu:</h3>
-      <p style="margin-bottom: 8px;">Môi trường âm thanh đóng vai trò quan trọng trong hiệu suất học tập và khả năng ghi nhớ. Thử nghiệm này được thiết kế dựa trên phương pháp <b>Continuous Performance Test (CPT)</b> nhằm đo lường chính xác biến đổi thời gian phản ứng (Reaction Time) và độ chính xác của thị giác khi chịu tác động từ các dải tần âm thanh khác nhau.</p>
-      
-      <h3 style="color: #f3f4f6; font-size: 1rem; margin-bottom: 8px; margin-top: 12px;">🧪 Quy trình thử nghiệm:</h3>
-      <ul style="padding-left: 20px; margin-bottom: 0;">
-        <li><b>Bước 1:</b> Khảo sát tự đánh giá trạng thái tâm lý ban đầu (Mệt mỏi, Stress).</li>
-        <li><b>Bước 2:</b> Thực hiện 4 vòng đo thời gian phản ứng tương ứng với các tần số âm thanh ngẫu nhiên.</li>
-        <li><b>Bước 3:</b> Đánh giá cảm nhận chủ quan về âm thanh và độ tập trung sau khi hoàn thành.</li>
-      </ul>
-    </div>
-  </div>
-</div>
+                <div style="background: rgba(15, 23, 42, 0.5); padding: 14px; border-radius: 8px; font-size: 0.9rem; line-height: 1.6; color: #cbd5e1;">
+                  <h3 style="color: #f3f4f6; font-size: 1rem; margin-bottom: 8px;">📌 Mô tả tổng quan & Mục tiêu nghiên cứu:</h3>
+                  <p style="margin-bottom: 8px;">Môi trường âm thanh đóng vai trò quan trọng trong hiệu suất học tập và khả năng ghi nhớ. Thử nghiệm này được thiết kế dựa trên phương pháp <b>Continuous Performance Test (CPT)</b> nhằm đo lường chính xác biến đổi thời gian phản ứng (Reaction Time) và độ chính xác của thị giác khi chịu tác động từ các dải tần âm thanh khác nhau.</p>
+                  
+                  <h3 style="color: #f3f4f6; font-size: 1rem; margin-bottom: 8px; margin-top: 12px;">🧪 Quy trình thử nghiệm:</h3>
+                  <ul style="padding-left: 20px; margin-bottom: 0;">
+                    <li><b>Bước 1:</b> Khảo sát tự đánh giá trạng thái tâm lý ban đầu (Mệt mỏi, Stress).</li>
+                    <li><b>Bước 2:</b> Thực hiện 4 vòng đo thời gian phản ứng tương ứng với các tần số âm thanh ngẫu nhiên.</li>
+                    <li><b>Bước 3:</b> Đánh giá cảm nhận chủ quan về âm thanh và độ tập trung sau khi hoàn thành.</li>
+                  </ul>
+                </div>
+            </div>
+        </section>
 
     </main>
 
@@ -310,14 +311,13 @@
 
     <!-- LOGIC JAVASCRIPT -->
     <script>
+        // Đường dẫn Google Apps Script Web App của bạn
         const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbykLLrLqJlabOMGFWPUuvKikbE7wS8EfzyLSbiAmsKzwHoidacGkZAHoUXv74Ct2uY/exec";
 
-       const GOOGLE_SHEET_URL = "YOUR_URL";
-
-let testData = JSON.parse(localStorage.getItem('psych_test_data') || '[]');
-let audioCtx = null;
-let currentOsc = null;
-let currentGain = null;
+        let testData = JSON.parse(localStorage.getItem('psych_test_data') || '[]');
+        let audioCtx = null;
+        let currentOsc = null;
+        let currentGain = null;
 
         const AUDIO_CONDITIONS = [
             { id: 'control', name: 'Đối chứng (0 Hz)', freq: 0 },
@@ -334,6 +334,7 @@ let currentGain = null;
             preFatigue: 3,
             preStress: 3
         };
+
         let sessionState = { 
             currentBlockIndex: 0, 
             activeTrial: 0, 
@@ -349,14 +350,23 @@ let currentGain = null;
 
         function switchTab(tabName) {
             ['test', 'guide', 'data', 'project'].forEach(t => {
-                document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`btn-tab-${t}`).classList.remove('active-tab');
-                document.getElementById(`btn-tab-${t}`).classList.add('bg-slate-800', 'text-slate-300');
+                const tabEl = document.getElementById(`tab-${t}`);
+                const btnEl = document.getElementById(`btn-tab-${t}`);
+                if (tabEl) tabEl.classList.add('hidden');
+                if (btnEl) {
+                    btnEl.classList.remove('active-tab');
+                    btnEl.classList.add('bg-slate-800', 'text-slate-300');
+                }
             });
-            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            
+            const activeTab = document.getElementById(`tab-${tabName}`);
             const activeBtn = document.getElementById(`btn-tab-${tabName}`);
-            activeBtn.classList.add('active-tab');
-            activeBtn.classList.remove('bg-slate-800', 'text-slate-300');
+            if (activeTab) activeTab.classList.remove('hidden');
+            if (activeBtn) {
+                activeBtn.classList.add('active-tab');
+                activeBtn.classList.remove('bg-slate-800', 'text-slate-300');
+            }
+            
             if(tabName === 'data') updateTable();
         }
 
@@ -364,23 +374,37 @@ let currentGain = null;
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
         }
 
         function playTone(freq, vol) {
             initAudio();
             stopTone();
             if (freq === 0) return;
+            
             currentOsc = audioCtx.createOscillator();
             currentGain = audioCtx.createGain();
             currentOsc.type = 'sine';
             currentOsc.frequency.setValueAtTime(freq, audioCtx.currentTime);
             currentGain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            
             currentOsc.connect(currentGain);
             currentGain.connect(audioCtx.destination);
             currentOsc.start();
         }
 
-     
+        function stopTone() {
+            if (currentOsc) {
+                try {
+                    currentOsc.stop();
+                    currentOsc.disconnect();
+                } catch(e) {}
+                currentOsc = null;
+            }
+        }
+
         function shuffleArray(array) {
             let arr = [...array];
             for (let i = arr.length - 1; i > 0; i--) {
@@ -402,6 +426,8 @@ let currentGain = null;
                 alert('Vui lòng tích chọn đồng ý với Điều khoản tự nguyện & Bảo mật dữ liệu!');
                 return;
             }
+
+            initAudio(); // Khởi tạo âm thanh từ tương tác người dùng
 
             sessionConfig.subjectId = sid;
             sessionConfig.maxTrialsPerBlock = parseInt(document.getElementById('trial-count').value);
@@ -427,7 +453,11 @@ let currentGain = null;
             document.getElementById('total-trials').innerText = sessionConfig.maxTrialsPerBlock;
             document.getElementById('active-cond-name').innerText = currentCond.name;
 
-            if(currentCond.freq > 0) playTone(currentCond.freq, sessionConfig.volume);
+            if(currentCond.freq > 0) {
+                playTone(currentCond.freq, sessionConfig.volume);
+            } else {
+                stopTone();
+            }
 
             sessionState.activeTrial = 0;
             sessionState.reactionTimes = [];
@@ -486,13 +516,14 @@ let currentGain = null;
 
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' && !document.getElementById('test-area').classList.contains('hidden')) {
-                e.preventDefault();
+                e.preventDefault(); // Tránh cuộn trang
                 handleReaction();
             }
         });
 
         function finishBlock() {
-            stopTone();
+            stopTone(); // Dừng phát âm thanh ngay khi kết thúc vòng
+            
             const currentCond = sessionConfig.randomizedConditions[sessionState.currentBlockIndex];
             const rts = sessionState.reactionTimes;
             const mean = rts.length ? Math.round(rts.reduce((a, b) => a + b, 0) / rts.length) : 0;
@@ -504,7 +535,6 @@ let currentGain = null;
             const sd = Math.round(Math.sqrt(variance));
             const accuracy = Math.round((rts.length / sessionConfig.maxTrialsPerBlock) * 100);
 
-            // Lưu tạm kết quả lượt test này
             sessionState.currentSessionResults.push({
                 condition: currentCond.name,
                 meanRt: mean,
@@ -519,7 +549,6 @@ let currentGain = null;
                 document.getElementById('completed-block-num').innerText = sessionState.currentBlockIndex + 1;
                 document.getElementById('break-panel').classList.remove('hidden');
             } else {
-                // Sau khi xong cả 4 vòng, hiện Phiếu đánh giá sau thực nghiệm
                 document.getElementById('post-survey-panel').classList.remove('hidden');
             }
         }
@@ -534,7 +563,6 @@ let currentGain = null;
             const postFocus = document.getElementById('post-focus').value;
             const timestamp = new Date().toLocaleString('vi-VN');
 
-            // Tổng hợp toàn bộ dữ liệu (Bao gồm cả Pre-survey và Post-survey)
             sessionState.currentSessionResults.forEach(res => {
                 const fullRecord = {
                     id: sessionConfig.subjectId,
@@ -550,11 +578,9 @@ let currentGain = null;
                     timestamp: timestamp
                 };
 
-                // 1. Lưu tại local
                 testData.push(fullRecord);
 
-                // 2. Tự động gửi về Google Sheet qua Web App
-                if (GOOGLE_SHEET_URL) {
+                if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL !== "YOUR_URL") {
                     fetch(GOOGLE_SHEET_URL, {
                         method: 'POST',
                         mode: 'no-cors',
