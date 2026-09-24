@@ -125,6 +125,16 @@
   <p>2. <b>Bảo Mật Dữ Liệu:</b> Mã học sinh (Subject ID) được sử dụng để ẩn danh hóa hoàn toàn. Dữ liệu chỉ phục vụ mục đích phân tích thống kê khoa học.</p>
   <p>3. <b>An Toàn Âm Thanh:</b> Âm thanh thử nghiệm được giới hạn ở mức âm lượng an toàn. Bạn có thể dừng bài thử nghiệm bất kỳ lúc nào nếu cảm thấy khó chịu.</p>
 </div>
+                <label class="flex items-center gap-3 text-sm text-slate-300 cursor-pointer">
+    <input type="checkbox" id="consent-check"
+        class="w-4 h-4 accent-indigo-500">
+    <span>Tôi đã đọc và đồng ý tham gia thử nghiệm.</span>
+</label>
+
+<button onclick="startFullTestSession()"
+    class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl">
+    BẮT ĐẦU THỬ NGHIỆM
+</button>
 
             <!-- KHU VỰC THỰC NGHIỆM (CPT TEST) -->
             <div id="test-area" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center space-y-6">
@@ -266,7 +276,7 @@
             </div>
         </section>
 
-       <div id="tab-about" class="tab-content" style="display: none;">
+       <div id="tab-project" class="tab-content hidden">
   <div style="background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 24px; max-width: 800px; margin: 0 auto; color: #e2e8f0;">
     <h2 style="color: #818cf8; font-size: 1.4rem; margin-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
       🎓 Đề Tài Nghiên Cứu Khoa Học Kỹ Thuật
@@ -305,7 +315,18 @@
         let testData = JSON.parse(localStorage.getItem('psych_test_data') || '[]');
         let audioCtx = null;
         let currentOsc = null;
-        let currentGain = null;
+       function stopTone() {
+    if (currentOsc) {
+        try { currentOsc.stop(); } catch(e) {}
+        currentOsc.disconnect();
+        currentOsc = null;
+    }
+
+    if (currentGain) {
+        currentGain.disconnect();
+        currentGain = null;
+    }
+}
 
         const AUDIO_CONDITIONS = [
             { id: 'control', name: 'Đối chứng (0 Hz)', freq: 0 },
@@ -368,14 +389,20 @@
             currentOsc.start();
         }
 
-        function stopTone() {
-            if (currentOsc) {
-                try { currentOsc.stop(); } catch(e){}
-                currentOsc.disconnect();
-                currentOsc = null;
-            }
-        }
+       function stopTone() {
+    if (currentOsc) {
+        try { currentOsc.stop(); } catch(e) {}
+        currentOsc.disconnect();
+        currentOsc = null;
+    }
 
+    if (currentGain) {
+        currentGain.disconnect();
+        currentGain = null;
+    }
+}
+        let currentOsc = null;
+let currentGain = null;
         function shuffleArray(array) {
             let arr = [...array];
             for (let i = arr.length - 1; i > 0; i--) {
