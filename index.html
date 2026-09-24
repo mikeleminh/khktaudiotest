@@ -118,18 +118,13 @@
                     </div>
                 </div>
 
-                <!-- ĐIỀU KHOẢN & BẢO MẬT -->
-                <div class="border-t border-slate-700/80 pt-4 space-y-3">
-                    <label class="flex items-center gap-3 cursor-pointer">
-                        <input type="checkbox" id="consent-check" class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-900 border-slate-700">
-                        <span class="text-xs text-slate-300 font-medium">Tôi đã hiểu rõ mục đích và tự nguyện tham gia bài thử nghiệm này.</span>
-                    </label>
-                </div>
-
-                <button onclick="startFullTestSession()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-md">
-                    <i class="fa-solid fa-play"></i> BẮT ĐẦU THỰC NGHIỆM
-                </button>
-            </div>
+               <!-- KHUNG ĐIỀU KHOẢN & CAM KẾT PARTICIPANT CONSENT -->
+<div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 12px; margin-bottom: 12px; max-height: 120px; overflow-y: auto; font-size: 0.85rem; color: #cbd5e1;">
+  <h4 style="color: #60a5fa; margin-bottom: 6px; font-size: 0.9rem;">ĐIỀU KHOẢN & CAM KẾT THAM GIA THỬ NGHIỆM:</h4>
+  <p>1. <b>Tính Tự Nguyện:</b> Bằng việc tham gia, bạn xác nhận tự nguyện đóng góp dữ liệu cho đề tài nghiên cứu KHKT.</p>
+  <p>2. <b>Bảo Mật Dữ Liệu:</b> Mã học sinh (Subject ID) được sử dụng để ẩn danh hóa hoàn toàn. Dữ liệu chỉ phục vụ mục đích phân tích thống kê khoa học.</p>
+  <p>3. <b>An Toàn Âm Thanh:</b> Âm thanh thử nghiệm được giới hạn ở mức âm lượng an toàn. Bạn có thể dừng bài thử nghiệm bất kỳ lúc nào nếu cảm thấy khó chịu.</p>
+</div>
 
             <!-- KHU VỰC THỰC NGHIỆM (CPT TEST) -->
             <div id="test-area" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center space-y-6">
@@ -271,18 +266,30 @@
             </div>
         </section>
 
-        <!-- TAB 4: THÔNG TIN ĐỀ TÀI -->
-        <section id="tab-project" class="hidden space-y-6">
-            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-4">
-                <h3 class="text-xl font-bold text-indigo-400 border-b border-slate-700 pb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-graduation-cap"></i> Đề Tài Nghiên Cứu Khoa Học Kỹ Thuật
-                </h3>
-                <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
-                    <p><strong>Tên đề tài:</strong> Nghiên cứu ảnh hưởng của các dải tần số âm thanh đến thời gian phản ứng và khả năng duy trì sự tập trung của học sinh THPT.</p>
-                    <p><strong>Học sinh thực hiện:</strong> Bùi Lê Quang Minh & Bùi Vũ Khánh Thư</p>
-                </div>
-            </div>
-        </section>
+       <div id="tab-about" class="tab-content" style="display: none;">
+  <div style="background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 24px; max-width: 800px; margin: 0 auto; color: #e2e8f0;">
+    <h2 style="color: #818cf8; font-size: 1.4rem; margin-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
+      🎓 Đề Tài Nghiên Cứu Khoa Học Kỹ Thuật
+    </h2>
+    
+    <div style="margin-bottom: 16px;">
+      <p style="margin-bottom: 6px;"><strong style="color: #93c5fd;">Tên đề tài:</strong> Nghiên cứu ảnh hưởng của các dải tần số âm thanh đến thời gian phản ứng và khả năng duy trì sự tập trung của học sinh THPT.</p>
+      <p style="margin-bottom: 6px;"><strong style="color: #93c5fd;">Học sinh thực hiện:</strong> Bùi Lê Quang Minh & Bùi Vũ Khánh Thư</p>
+    </div>
+
+    <div style="background: rgba(15, 23, 42, 0.5); padding: 14px; border-radius: 8px; font-size: 0.9rem; line-height: 1.6; color: #cbd5e1;">
+      <h3 style="color: #f3f4f6; font-size: 1rem; margin-bottom: 8px;">📌 Mô tả tổng quan & Mục tiêu nghiên cứu:</h3>
+      <p style="margin-bottom: 8px;">Môi trường âm thanh đóng vai trò quan trọng trong hiệu suất học tập và khả năng ghi nhớ. Thử nghiệm này được thiết kế dựa trên phương pháp <b>Continuous Performance Test (CPT)</b> nhằm đo lường chính xác biến đổi thời gian phản ứng (Reaction Time) và độ chính xác của thị giác khi chịu tác động từ các dải tần âm thanh khác nhau.</p>
+      
+      <h3 style="color: #f3f4f6; font-size: 1rem; margin-bottom: 8px; margin-top: 12px;">🧪 Quy trình thử nghiệm:</h3>
+      <ul style="padding-left: 20px; margin-bottom: 0;">
+        <li><b>Bước 1:</b> Khảo sát tự đánh giá trạng thái tâm lý ban đầu (Mệt mỏi, Stress).</li>
+        <li><b>Bước 2:</b> Thực hiện 4 vòng đo thời gian phản ứng tương ứng với các tần số âm thanh ngẫu nhiên.</li>
+        <li><b>Bước 3:</b> Đánh giá cảm nhận chủ quan về âm thanh và độ tập trung sau khi hoàn thành.</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
     </main>
 
