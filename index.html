@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PSYCH-TEST KHKT v0.3</title>
+    <title>PSYCH-TEST KHKT v0.4</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -20,7 +20,7 @@
                     <i class="fa-solid fa-brain text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg leading-none">PSYCH-TEST KHKT v0.3</h1>
+                    <h1 class="font-bold text-lg leading-none">PSYCH-TEST KHKT v0.4</h1>
                     <p class="text-xs text-slate-400 mt-1">Nghiên cứu ảnh hưởng của tần số âm thanh đến nhận thức</p>
                 </div>
             </div>
@@ -54,69 +54,84 @@
                     </div>
                     <div>
                         <h2 class="text-xl font-bold mb-1">Khảo sát & Kiểm tra Thực nghiệm</h2>
-                        <p class="text-sm text-slate-400">Bài thử nghiệm đo thời gian phản ứng thị giác (CPT). Bạn sẽ lần lượt trải qua <strong>4 dải tần số âm thanh ngẫu nhiên</strong>. Vui lòng đeo tai nghe và giữ tập trung cao độ.</p>
+                        <p class="text-sm text-slate-400">Bài thử nghiệm đo thời gian phản ứng thị giác (CPT) kết hợp đánh giá tâm lý trước/sau thử nghiệm. Bạn sẽ lần lượt trải qua <strong>4 dải tần số âm thanh ngẫu nhiên</strong>. Vui lòng đeo tai nghe và giữ tập trung cao độ.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- FORM CẤU HÌNH -->
+            <!-- FORM CẤU HÌNH & PHIẾU KHẢO SÁT BAN ĐẦU -->
             <div id="setup-panel" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-6">
-                <h3 class="text-md font-semibold text-slate-300 flex items-center gap-2">
-                    <i class="fa-solid fa-sliders text-indigo-400"></i> THIẾT LẬP THÔNG SỐ THỬ NGHIỆM
+                <h3 class="text-md font-semibold text-slate-300 flex items-center gap-2 border-b border-slate-700 pb-3">
+                    <i class="fa-solid fa-sliders text-indigo-400"></i> THÔNG TIN BẮT ĐẦU & PHIẾU TỰ ĐÁNH GIÁ (PRE-TEST)
                 </h3>
 
-                <div>
-                    <label class="block text-sm font-medium mb-2 text-slate-300">Mã Học Sinh (Subject ID) <span class="text-rose-500">*</span></label>
-                    <div class="relative">
-                        <i class="fa-solid fa-user absolute left-4 top-3.5 text-slate-500"></i>
-                        <input type="text" id="subject-id" placeholder="VD: HS01, HS02..." class="w-full bg-slate-900 border border-slate-700 rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:border-indigo-500 text-slate-100">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- MÃ HS & CẤU HÌNH -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Số lượt thử nghiệm mỗi dải tần</label>
-                        <select id="trial-count" class="w-full bg-slate-900 border border-slate-700 rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-slate-100">
-                            <option value="10">10 Lượt / Tần số (Thực nghiệm tiêu chuẩn)</option>
-                            <option value="15">15 Lượt / Tần số (Độ chính xác cao)</option>
-                            <option value="5">5 Lượt / Tần số (Thử nhanh)</option>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Mã Học Sinh (Subject ID) <span class="text-rose-500">*</span></label>
+                        <input type="text" id="subject-id" placeholder="VD: HS01, HS02..." class="w-full bg-slate-900 border border-slate-700 rounded-xl py-2.5 px-4 focus:outline-none focus:border-indigo-500 text-slate-100 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Số lượt thử / Tần số</label>
+                        <select id="trial-count" class="w-full bg-slate-900 border border-slate-700 rounded-xl py-2.5 px-4 focus:outline-none focus:border-indigo-500 text-slate-100 text-sm">
+                            <option value="10">10 Lượt (Chuẩn)</option>
+                            <option value="15">15 Lượt (Chính xác cao)</option>
+                            <option value="5">5 Lượt (Thử nhanh)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Cường độ âm thanh (Volume)</label>
-                        <div class="flex items-center gap-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Âm lượng (Volume)</label>
+                        <div class="flex items-center gap-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-2">
                             <input type="range" id="volume-range" min="5" max="100" value="30" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500" oninput="document.getElementById('vol-val').innerText = this.value + '%'">
                             <span id="vol-val" class="text-xs font-bold text-slate-300 w-10 text-right">30%</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="p-4 bg-slate-900/60 border border-slate-700/80 rounded-xl text-xs text-slate-300 space-y-1">
-                    <p><i class="fa-solid fa-shuffle text-indigo-400 mr-1"></i> <strong>Quy trình thực nghiệm:</strong> Máy sẽ tự động xáo trộn ngẫu nhiên 4 điều kiện âm thanh: <em>Đối chứng (0Hz), Tần số thấp (250Hz), Trung (1000Hz), Cao (4000Hz)</em>.</p>
+                <!-- PHIẾU TỰ ĐÁNH GIÁ TRƯỚC THỬ NGHIỆM -->
+                <div class="bg-slate-900/60 border border-slate-700/80 rounded-xl p-4 space-y-4">
+                    <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-question"></i> Khảo sát trạng thái hiện tại của bạn
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Mức độ MỆT MỎI hiện tại (1: Rất tỉnh táo $\rightarrow$ 5: Rất mệt mỏi):</label>
+                            <select id="pre-fatigue" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200 text-xs">
+                                <option value="1">1 - Cực kỳ tỉnh táo, tràn đầy năng lượng</option>
+                                <option value="2">2 - Bình thường, hơi tỉnh táo</option>
+                                <option value="3" selected>3 - Bình thường</option>
+                                <option value="4">4 - Hơi mệt mỏi, oải</option>
+                                <option value="5">5 - Rất mệt mỏi, buồn ngủ</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Mức độ CĂNG THẲNG / STRESS (1: Cực kỳ thư giãn $\rightarrow$ 5: Rất căng thẳng):</label>
+                            <select id="pre-stress" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200 text-xs">
+                                <option value="1">1 - Thoải mái, không căng thẳng</option>
+                                <option value="2">2 - Hơi thoải mái</option>
+                                <option value="3" selected>3 - Bình thường</option>
+                                <option value="4">4 - Hơi áp lực / căng thẳng</option>
+                                <option value="5">5 - Cực kỳ căng thẳng / lo âu</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- MỤC ĐIỀU KHOẢN & BẢO MẬT -->
-                <div class="border-t border-slate-700/80 pt-5 mt-4 space-y-3">
-                    <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="fa-solid fa-shield-halved text-emerald-400"></i> Điều khoản tự nguyện & Bảo mật dữ liệu
-                    </h4>
-                    <div class="bg-slate-900/80 border border-slate-700/60 rounded-xl p-3.5 text-xs text-slate-400 space-y-1.5 leading-relaxed">
-                        <p>• <strong>Mục đích:</strong> Phục vụ đề tài Nghiên cứu Khoa học Kỹ thuật dành cho học sinh THPT.</p>
-                        <p>• <strong>Bảo mật:</strong> Mọi dữ liệu thu thập (thời gian phản ứng, tỷ lệ chính xác) hoàn toàn ẩn danh thông qua Mã Học Sinh, không thu thập thông tin định danh cá nhân.</p>
-                        <p>• <strong>Quyền lợi:</strong> Học sinh có quyền dừng thực nghiệm bất cứ lúc nào nếu cảm thấy mệt mỏi hoặc khó chịu với âm thanh.</p>
-                    </div>
-                    <label class="flex items-center gap-3 cursor-pointer pt-1">
+                <!-- ĐIỀU KHOẢN & BẢO MẬT -->
+                <div class="border-t border-slate-700/80 pt-4 space-y-3">
+                    <label class="flex items-center gap-3 cursor-pointer">
                         <input type="checkbox" id="consent-check" class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-900 border-slate-700">
                         <span class="text-xs text-slate-300 font-medium">Tôi đã hiểu rõ mục đích và tự nguyện tham gia bài thử nghiệm này.</span>
                     </label>
                 </div>
 
-                <button onclick="startFullTestSession()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-lg">
-                    <i class="fa-solid fa-play"></i> BẮT ĐẦU CHUỖI THỰC NGHIỆM
+                <button onclick="startFullTestSession()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-md">
+                    <i class="fa-solid fa-play"></i> BẮT ĐẦU THỰC NGHIỆM
                 </button>
             </div>
 
-            <!-- KHU VỰC THỰC NGHIỆM -->
+            <!-- KHU VỰC THỰC NGHIỆM (CPT TEST) -->
             <div id="test-area" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center space-y-6">
                 <div class="flex justify-between items-center text-sm text-slate-400 border-b border-slate-700 pb-4">
                     <span>Vòng: <strong id="current-block" class="text-indigo-400">1 / 4</strong></span>
@@ -146,19 +161,56 @@
                 </button>
             </div>
 
+            <!-- PHIẾU ĐÁNH GIÁ SAU THỰC NGHIỆM (POST-TEST EVALUATION) -->
+            <div id="post-survey-panel" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-6">
+                <div class="text-center space-y-2 border-b border-slate-700 pb-4">
+                    <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-xl">
+                        <i class="fa-solid fa-square-poll-vertical"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Phiếu Đánh Giá Sau Thử Nghiệm</h3>
+                    <p class="text-xs text-slate-400">Vui lòng hoàn thành 2 câu hỏi cảm nhận nhanh dưới đây để lưu kết quả vào hệ thống.</p>
+                </div>
+
+                <div class="space-y-4 text-sm">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">1. Mức độ GÂY CHÓI TAI / KHÓ CHỊU của các dải âm thanh vừa nghe:</label>
+                        <select id="post-annoyance" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-slate-100 text-xs">
+                            <option value="1">1 - Hoàn toàn êm dịu / Không gây khó chịu</option>
+                            <option value="2">2 - Hơi nghe thấy tiếng ồn nhưng bình thường</option>
+                            <option value="3" selected>3 - Bình thường</option>
+                            <option value="4">4 - Khá chói tai / Cảm thấy hơi phiền</option>
+                            <option value="5">5 - Rất chói tai / Cực kỳ khó chịu</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">2. Tự đánh giá KHẢ NĂNG TẬP TRUNG của bản thân trong suốt bài test vừa qua:</label>
+                        <select id="post-focus" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-slate-100 text-xs">
+                            <option value="5">5 - Cực kỳ tập trung, không phân tâm chút nào</option>
+                            <option value="4">4 - Khá tập trung</option>
+                            <option value="3" selected>3 - Mức độ tập trung trung bình</option>
+                            <option value="2">2 - Hay bị mất tập trung / Xao nhãng</option>
+                            <option value="1">1 - Cực kỳ mất tập trung / Rất mệt mỏi</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="submitFinalSessionData()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> HOÀN TẤT & GỬI KẾT QUẢ VỀ HỆ THỐNG
+                </button>
+            </div>
+
             <!-- KẾT QUẢ CÁ NHÂN TỔNG HỢP -->
             <div id="result-panel" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-6">
                 <div class="text-center space-y-2">
                     <div class="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-2xl">
-                        <i class="fa-solid fa-check-double"></i>
+                        <i class="fa-solid fa-circle-check"></i>
                     </div>
-                    <h3 class="text-2xl font-bold">Hoàn Thành Toàn Bộ 4 Dải Tần!</h3>
-                    <p class="text-sm text-slate-400">Dữ liệu thử nghiệm ngẫu nhiên đã được ghi nhận tự động vào hệ thống.</p>
+                    <h3 class="text-2xl font-bold">Lưu Dữ Liệu Thành Công!</h3>
+                    <p class="text-sm text-slate-400">Cảm ơn bạn đã tham gia thực nghiệm. Dữ liệu đã được tự động gửi về Google Sheet của nhóm nghiên cứu.</p>
                 </div>
 
-                <div id="summary-cards" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- JS sẽ render kết quả 4 dải tần ở đây -->
-                </div>
+                <div id="summary-cards" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
 
                 <button onclick="resetTest()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-xl transition">
                     Thực Hiện Cho Học Sinh Khác
@@ -173,9 +225,9 @@
                     <i class="fa-solid fa-book-open"></i> Hướng Dẫn Dành Cho Học Sinh
                 </h3>
                 <ol class="list-decimal list-inside space-y-3 text-slate-300 text-sm leading-relaxed">
-                    <li><strong class="text-white">Chuẩn bị:</strong> Đeo tai nghe, điền Mã Học Sinh và tích chọn Đồng ý điều khoản.</li>
-                    <li><strong class="text-white">Thực nghiệm 4 Vòng:</strong> Bạn sẽ đi qua 4 dải tần âm thanh ngẫu nhiên. Sau mỗi vòng sẽ có màn hình nghỉ giải lao.</li>
-                    <li><strong class="text-white">Thao tác:</strong> Bấm phím <kbd class="px-2 py-0.5 bg-slate-700 border border-slate-600 rounded text-amber-300">Spacebar</kbd> ngay khi thấy VÒNG TRÒN XANH LÁ xuất hiện.</li>
+                    <li><strong class="text-white">Chuẩn bị:</strong> Đeo tai nghe, nhập Mã Học Sinh và hoàn thành 2 câu tự đánh giá mức độ mệt mỏi/căng thẳng ban đầu.</li>
+                    <li><strong class="text-white">Thực nghiệm 4 Vòng:</strong> Bạn sẽ đi qua 4 dải tần âm thanh ngẫu nhiên. Bấm phím <kbd class="px-2 py-0.5 bg-slate-700 border border-slate-600 rounded text-amber-300">Spacebar</kbd> ngay khi thấy VÒNG TRÒN XANH LÁ xuất hiện.</li>
+                    <li><strong class="text-white">Hoàn tất:</strong> Sau khi hết 4 vòng, hãy điền Phiếu đánh giá sau thử nghiệm để kết thúc.</li>
                 </ol>
             </div>
         </section>
@@ -186,7 +238,7 @@
                 <div class="flex justify-between items-center flex-wrap gap-4 border-b border-slate-700 pb-4">
                     <div>
                         <h3 class="text-xl font-bold">Bảng Dữ Liệu Thực Nghiệm Local</h3>
-                        <p class="text-xs text-slate-400 mt-1">Lưu trữ trên thiết bị hiện tại (Đồng thời tự động đồng bộ về Google Sheet)</p>
+                        <p class="text-xs text-slate-400 mt-1">Lưu trữ tạm tại thiết bị (Tự động đồng bộ liên tục về Google Sheet)</p>
                     </div>
                     <div class="flex gap-2">
                         <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2">
@@ -203,16 +255,17 @@
                         <thead class="bg-slate-900/60 text-slate-400 text-xs uppercase">
                             <tr>
                                 <th class="p-3">Mã HS</th>
-                                <th class="p-3">Điều kiện âm thanh</th>
+                                <th class="p-3">Điều kiện</th>
                                 <th class="p-3">Mean RT (ms)</th>
                                 <th class="p-3">SD (ms)</th>
                                 <th class="p-3">Độ chính xác</th>
                                 <th class="p-3">Lỗi bấm sớm</th>
+                                <th class="p-3">Mệt mỏi/Căng thẳng</th>
+                                <th class="p-3">Khó chịu/Tập trung</th>
                                 <th class="p-3">Thời gian</th>
                             </tr>
                         </thead>
-                        <tbody id="data-table-body" class="divide-y divide-slate-700/50">
-                        </tbody>
+                        <tbody id="data-table-body" class="divide-y divide-slate-700/50"></tbody>
                     </table>
                 </div>
             </div>
@@ -227,7 +280,6 @@
                 <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
                     <p><strong>Tên đề tài:</strong> Nghiên cứu ảnh hưởng của các dải tần số âm thanh đến thời gian phản ứng và khả năng duy trì sự tập trung của học sinh THPT.</p>
                     <p><strong>Học sinh thực hiện:</strong> Bùi Lê Quang Minh & Bùi Vũ Khánh Thư</p>
-                    <p><strong>Thiết kế thực nghiệm:</strong> Within-subjects design (Mỗi đối tượng thử nghiệm trải qua cả 4 điều kiện âm thanh với thứ tự ngẫu nhiên hóa để triệt tiêu hiệu ứng thứ tự/mệt mỏi).</p>
                 </div>
             </div>
         </section>
@@ -241,7 +293,6 @@
 
     <!-- LOGIC JAVASCRIPT -->
     <script>
-        // WEB APP URL CỦA BẠN ĐÃ ĐƯỢC CẤU HÌNH Ở ĐÂY
         const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbykLLrLqJlabOMGFWPUuvKikbE7wS8EfzyLSbiAmsKzwHoidacGkZAHoUXv74Ct2uY/exec";
 
         let testData = JSON.parse(localStorage.getItem('psych_test_data') || '[]');
@@ -256,8 +307,24 @@
             { id: 'high', name: 'Tần số Cao (4,000 Hz)', freq: 4000 }
         ];
 
-        let sessionConfig = { subjectId: '', maxTrialsPerBlock: 10, volume: 0.3, randomizedConditions: [] };
-        let sessionState = { currentBlockIndex: 0, activeTrial: 0, reactionTimes: [], earlyErrors: 0, startTime: 0, waitingForStimulus: false, timeoutId: null, currentSessionResults: [] };
+        let sessionConfig = { 
+            subjectId: '', 
+            maxTrialsPerBlock: 10, 
+            volume: 0.3, 
+            randomizedConditions: [],
+            preFatigue: 3,
+            preStress: 3
+        };
+        let sessionState = { 
+            currentBlockIndex: 0, 
+            activeTrial: 0, 
+            reactionTimes: [], 
+            earlyErrors: 0, 
+            startTime: 0, 
+            waitingForStimulus: false, 
+            timeoutId: null, 
+            currentSessionResults: [] 
+        };
 
         document.addEventListener('DOMContentLoaded', updateTable);
 
@@ -327,6 +394,8 @@
             sessionConfig.subjectId = sid;
             sessionConfig.maxTrialsPerBlock = parseInt(document.getElementById('trial-count').value);
             sessionConfig.volume = parseFloat(document.getElementById('volume-range').value) / 100;
+            sessionConfig.preFatigue = document.getElementById('pre-fatigue').value;
+            sessionConfig.preStress = document.getElementById('pre-stress').value;
             sessionConfig.randomizedConditions = shuffleArray(AUDIO_CONDITIONS);
 
             sessionState.currentBlockIndex = 0;
@@ -423,30 +492,14 @@
             const sd = Math.round(Math.sqrt(variance));
             const accuracy = Math.round((rts.length / sessionConfig.maxTrialsPerBlock) * 100);
 
-            const record = {
-                id: sessionConfig.subjectId,
+            // Lưu tạm kết quả lượt test này
+            sessionState.currentSessionResults.push({
                 condition: currentCond.name,
                 meanRt: mean,
                 sdRt: sd,
                 accuracy: accuracy,
-                errors: sessionState.earlyErrors,
-                timestamp: new Date().toLocaleString('vi-VN')
-            };
-
-            // 1. Lưu tại local
-            testData.push(record);
-            sessionState.currentSessionResults.push(record);
-            localStorage.setItem('psych_test_data', JSON.stringify(testData));
-
-            // 2. Tự động gửi về Google Sheet qua Web App
-            if (GOOGLE_SHEET_URL) {
-                fetch(GOOGLE_SHEET_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(record)
-                }).catch(err => console.error("Lỗi gửi dữ liệu về Google Sheet:", err));
-            }
+                errors: sessionState.earlyErrors
+            });
 
             document.getElementById('test-area').classList.add('hidden');
 
@@ -454,13 +507,55 @@
                 document.getElementById('completed-block-num').innerText = sessionState.currentBlockIndex + 1;
                 document.getElementById('break-panel').classList.remove('hidden');
             } else {
-                finishFullSession();
+                // Sau khi xong cả 4 vòng, hiện Phiếu đánh giá sau thực nghiệm
+                document.getElementById('post-survey-panel').classList.remove('hidden');
             }
         }
 
         function startNextBlock() {
             sessionState.currentBlockIndex++;
             startBlock();
+        }
+
+        function submitFinalSessionData() {
+            const postAnnoyance = document.getElementById('post-annoyance').value;
+            const postFocus = document.getElementById('post-focus').value;
+            const timestamp = new Date().toLocaleString('vi-VN');
+
+            // Tổng hợp toàn bộ dữ liệu (Bao gồm cả Pre-survey và Post-survey)
+            sessionState.currentSessionResults.forEach(res => {
+                const fullRecord = {
+                    id: sessionConfig.subjectId,
+                    condition: res.condition,
+                    meanRt: res.meanRt,
+                    sdRt: res.sdRt,
+                    accuracy: res.accuracy,
+                    errors: res.errors,
+                    preFatigue: sessionConfig.preFatigue,
+                    preStress: sessionConfig.preStress,
+                    postAnnoyance: postAnnoyance,
+                    postFocus: postFocus,
+                    timestamp: timestamp
+                };
+
+                // 1. Lưu tại local
+                testData.push(fullRecord);
+
+                // 2. Tự động gửi về Google Sheet qua Web App
+                if (GOOGLE_SHEET_URL) {
+                    fetch(GOOGLE_SHEET_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(fullRecord)
+                    }).catch(err => console.error("Lỗi gửi dữ liệu:", err));
+                }
+            });
+
+            localStorage.setItem('psych_test_data', JSON.stringify(testData));
+
+            document.getElementById('post-survey-panel').classList.add('hidden');
+            finishFullSession();
         }
 
         function finishFullSession() {
@@ -518,6 +613,8 @@
                     <td class="p-3">${item.sdRt} ms</td>
                     <td class="p-3 text-emerald-400 font-medium">${item.accuracy}%</td>
                     <td class="p-3 text-rose-400">${item.errors}</td>
+                    <td class="p-3 text-xs text-amber-300">Mệt: ${item.preFatigue || '-'} / Stress: ${item.preStress || '-'}</td>
+                    <td class="p-3 text-xs text-sky-300">Chói: ${item.postAnnoyance || '-'} / Tập trung: ${item.postFocus || '-'}</td>
                     <td class="p-3 text-xs text-slate-500">${item.timestamp}</td>
                 `;
                 tbody.appendChild(tr);
@@ -529,9 +626,9 @@
                 alert("Chưa có dữ liệu để xuất!");
                 return;
             }
-            let csv = "Subject_ID,Audio_Condition,Mean_RT_ms,SD_RT_ms,Accuracy_Percent,Early_Errors,Timestamp\n";
+            let csv = "Subject_ID,Audio_Condition,Mean_RT_ms,SD_RT_ms,Accuracy_Percent,Early_Errors,Pre_Fatigue,Pre_Stress,Post_Annoyance,Post_Focus,Timestamp\n";
             testData.forEach(d => {
-                csv += `"${d.id}","${d.condition}",${d.meanRt},${d.sdRt},${d.accuracy},${d.errors},"${d.timestamp}"\n`;
+                csv += `"${d.id}","${d.condition}",${d.meanRt},${d.sdRt},${d.accuracy},${d.errors},"${d.preFatigue}","${d.preStress}","${d.postAnnoyance}","${d.postFocus}","${d.timestamp}"\n`;
             });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
