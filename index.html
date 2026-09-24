@@ -312,21 +312,12 @@
     <script>
         const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbykLLrLqJlabOMGFWPUuvKikbE7wS8EfzyLSbiAmsKzwHoidacGkZAHoUXv74Ct2uY/exec";
 
-        let testData = JSON.parse(localStorage.getItem('psych_test_data') || '[]');
-        let audioCtx = null;
-        let currentOsc = null;
-       function stopTone() {
-    if (currentOsc) {
-        try { currentOsc.stop(); } catch(e) {}
-        currentOsc.disconnect();
-        currentOsc = null;
-    }
+       const GOOGLE_SHEET_URL = "YOUR_URL";
 
-    if (currentGain) {
-        currentGain.disconnect();
-        currentGain = null;
-    }
-}
+let testData = JSON.parse(localStorage.getItem('psych_test_data') || '[]');
+let audioCtx = null;
+let currentOsc = null;
+let currentGain = null;
 
         const AUDIO_CONDITIONS = [
             { id: 'control', name: 'Đối chứng (0 Hz)', freq: 0 },
@@ -389,20 +380,7 @@
             currentOsc.start();
         }
 
-       function stopTone() {
-    if (currentOsc) {
-        try { currentOsc.stop(); } catch(e) {}
-        currentOsc.disconnect();
-        currentOsc = null;
-    }
-
-    if (currentGain) {
-        currentGain.disconnect();
-        currentGain = null;
-    }
-}
-        let currentOsc = null;
-let currentGain = null;
+     
         function shuffleArray(array) {
             let arr = [...array];
             for (let i = arr.length - 1; i > 0; i--) {
